@@ -134,11 +134,9 @@ jobs:
         if: matrix.name == 'win32'
         run: |
           sudo dpkg --add-architecture i386
-          sudo mkdir -pm755 /etc/apt/keyrings
-          sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
-          sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
-          sudo apt update -y
-          sudo apt install -y --install-recommends winehq-stable mono-devel
+          sudo apt-get -y update
+          sudo apt-get -y install wine wine64 mono-devel
+          export PATH=$PATH:/usr/lib/wine
           yarn make:win32
           mkdir -p ./out/keep
           mv ./out/make/zip/win32/ia32/*.zip ./out/keep/gb-studio-${CIRCLE_BRANCH}-windows_x86.zip
@@ -148,11 +146,9 @@ jobs:
         if: matrix.name == 'win64'
         run: |
           sudo dpkg --add-architecture i386
-          sudo mkdir -pm755 /etc/apt/keyrings
-          sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
-          sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/winehq-jammy.sources
-          sudo apt update -y
-          sudo apt install -y --install-recommends winehq-stable mono-devel
+          sudo apt-get -y update
+          sudo apt-get -y install wine wine64 mono-devel
+          export PATH=$PATH:/usr/lib/wine
           yarn make:win
           mkdir -p ./out/keep
           mv ./out/make/zip/win32/x64/*.zip ./out/keep/gb-studio-${CIRCLE_BRANCH}-windows_x86_64.zip
