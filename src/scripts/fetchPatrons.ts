@@ -128,8 +128,8 @@ const fetchPatrons = async (): Promise<LatestPatrons> => {
     });
 
     if (res.links?.next) {
-      // Wait 3 seconds between API calls to prevent API limits being hit in CI/CD
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+      // Wait 5 seconds between API calls to prevent API limits being hit in CI/CD
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       await fetchPage(res.links.next);
     }
   };
