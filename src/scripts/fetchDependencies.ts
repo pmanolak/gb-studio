@@ -27,6 +27,12 @@ const dependencies = {
       type: "targz",
     },
   },
+  "linux-arm64": {
+    gbdk: {
+      url: "https://github.com/gbdk-2020/gbdk-2020/releases/download/gbdk-next/gbdk-linux-arm64.tar.gz",
+      type: "targz",
+    },
+  },
   "win32-ia32": {
     gbdk: {
       url: "https://github.com/gbdk-2020/gbdk-2020/releases/download/4.3.0/gbdk-win32.zip",
@@ -95,4 +101,6 @@ const main = async () => {
   }
 };
 
-main();
+main().catch((e) => {
+  console.error("ERROR", e);
+});
