@@ -101,7 +101,7 @@ jobs:
       - name: Build Mac ARM
         if: matrix.name == 'mac'
         env:
-          APPLE_ID: ${{ secrets.MAC_NOTARIZE_ID }}
+          APPLE_ID: ${{ vars.TESTING_BAR }}
           APPLE_ID_PASSWORD: ${{ secrets.MAC_NOTARIZE_PWD }}
           APPLE_TEAM_ID: ${{ secrets.MAC_NOTARIZE_TEAM }}
         run: |
@@ -116,7 +116,7 @@ jobs:
       - name: Build Mac Intel
         if: matrix.name == 'mac-intel'
         env:
-          APPLE_ID: ${{ secrets.MAC_NOTARIZE_ID }}
+          APPLE_ID: ${{ vars.TESTING_BAZ }}
           APPLE_ID_PASSWORD: ${{ secrets.MAC_NOTARIZE_PWD }}
           APPLE_TEAM_ID: ${{ secrets.MAC_NOTARIZE_TEAM }}
         run: |
