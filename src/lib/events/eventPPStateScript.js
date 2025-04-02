@@ -9,28 +9,22 @@ const fields = [
     type: "select",
     defaultValue: "0",
     options: [
-      ["0", "Start Falling"],
-      ["1", "Falling"],
-      ["2", "End Falling"],
-      ["3", "Start Grounded"],
-      ["4", "Grounded"],
-      ["5", "End Grounded"],
-      ["6", "Start Jumping"],
-      ["7", "Jumping"],
-      ["8", "End Jumping"],
-      ["9", "Start Dashing"],
-      ["10", "Dashing"],
-      ["11", "End Dashing"],
-      ["12", "Start Climbing Ladder"],
-      ["13", "Climbing Ladder"],
-      ["14", "End Climbing Ladder"],
-      ["15", "Start Wall Slide"],
-      ["16", "Wall Sliding"],
-      ["17", "End Wall Slide"],
-      ["18", "Knockback State Start"],
-      ["19", "Knockback State"],
-      ["21", "Blank State Start"],
-      ["22", "Blank State"],
+      ["fallStart", "Start Falling"],
+      ["fallEnd", "End Falling"],
+      ["groundStart", "Start Grounded"],
+      ["groundEnd", "End Grounded"],
+      ["jumpStart", "Start Jumping"],
+      ["jumpEnd", "End Jumping"],
+      ["dashStart", "Start Dashing"],
+      ["dashEnd", "End Dashing"],
+      ["ladderStart", "Start Climbing Ladder"],
+      ["ladderEnd", "End Climbing Ladder"],
+      ["wallStart", "Start Wall Slide"],
+      ["wallEnd", "End Wall Slide"],
+      ["knockbackStart", "Start Knockback State"],
+      ["knockbackEnd", "End Knockback State"],
+      ["blankStart", "Start Blank State"],
+      ["blankEnd", "End Blank State"],
     ],
   },
   {
@@ -56,6 +50,25 @@ const fields = [
   },
 ];
 
+const valuesMap = {
+  fallStart: "PLATFORM_FALL_INIT",
+  fallEnd: "PLATFORM_FALL_END",
+  groundStart: "PLATFORM_GROUND_INIT",
+  groundEnd: "PLATFORM_GROUND_END",
+  jumpStart: "PLATFORM_JUMP_INIT",
+  jumpEnd: "PLATFORM_JUMP_END",
+  dashStart: "PLATFORM_DASH_INIT",
+  dashEnd: "PLATFORM_DASH_END",
+  ladderStart: "PLATFORM_LADDER_INIT",
+  ladderEnd: "PLATFORM_LADDER_END",
+  wallStart: "PLATFORM_WALL_INIT",
+  wallEnd: "PLATFORM_WALL_END",
+  knockbackStart: "PLATFORM_KNOCKBACK_INIT",
+  knockbackEnd: "PLATFORM_KNOCKBACK_END",
+  blankStart: "PLATFORM_BLANK_INIT",
+  blankEnd: "PLATFORM_BLANK_END",
+};
+
 const compile = (input, helpers) => {
   const { appendRaw, _compileSubScript, _addComment, vm_call_native, event } =
     helpers;
@@ -64,12 +77,12 @@ const compile = (input, helpers) => {
     input.script,
     "test_symbol" + input.state
   );
-  const stateNumber = `${input.state}`;
+  const callbackLabel = valuesMap[input.state] ?? valuesMap.fallStart;
   const bank = `___bank_${ScriptRef}`;
   const ptr = `_${ScriptRef}`;
 
   _addComment("Set Platformer Script");
-  appendRaw(`VM_PUSH_CONST ${stateNumber}`);
+  appendRaw(`VM_PUSH_CONST ${callbackLabel}`);
   appendRaw(`VM_PUSH_CONST ${bank}`);
   appendRaw(`VM_PUSH_CONST ${ptr}`);
   appendRaw(`VM_CALL_NATIVE b_vm_state_script_attach, _vm_state_script_attach`);

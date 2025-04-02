@@ -9,14 +9,14 @@ const fields = [
     type: "select",
     defaultValue: "0",
     options: [
-      ["0", "Falling"],
-      ["3", "Grounded"],
-      ["6", "Jumping"],
-      ["9", "Dashing"],
-      ["12", "On a Ladder"],
-      ["15", "On a Wall"],
-      ["18", "Knockback"],
-      ["20", "Blank"],
+      ["fall", "Falling"],
+      ["ground", "Grounded"],
+      ["jump", "Jumping"],
+      ["dash", "Dashing"],
+      ["ladder", "On a Ladder"],
+      ["wall", "On a Wall"],
+      ["knockback", "Knockback"],
+      ["blank", "Blank"],
     ],
   },
   {
@@ -25,12 +25,23 @@ const fields = [
   },
 ];
 
+const valuesMap = {
+  fall: "PLATFORM_FALL_STATE",
+  ground: "PLATFORM_GROUND_STATE",
+  jump: "PLATFORM_JUMP_STATE",
+  dash: "PLATFORM_DASH_STATE",
+  ladder: "PLATFORM_LADDER_STATE",
+  wall: "PLATFORM_WALL_STATE",
+  knockback: "PLATFORM_KNOCKBACK_STATE",
+  blank: "PLATFORM_BLANK_STATE",
+};
+
 const compile = (input, helpers) => {
   const { _addComment, _addNL, _setConstMemInt16, _setMemInt16ToVariable } =
     helpers;
   _addComment("Set Platformer Plus State");
-  _setConstMemInt16(input.field, input.state);
-
+  const stateValue = valuesMap[input.state] ?? valuesMap.fall;
+  _setConstMemInt16(input.field, stateValue);
   _addNL();
 };
 

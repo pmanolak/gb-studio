@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import keyBy from "lodash/keyBy";
+import { BaseCondition } from "shared/lib/conditionsFilter";
 import { CollisionTileDef } from "shared/lib/resources/types";
 import projectActions from "store/features/project/projectActions";
 
@@ -19,6 +20,7 @@ export type EngineFieldSchema = {
   max?: number;
   options?: [number, string][];
   file?: string;
+  conditions?: BaseCondition[];
 };
 
 export type SceneTypeSchema = {

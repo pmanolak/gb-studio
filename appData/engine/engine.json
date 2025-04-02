@@ -2,33 +2,6 @@
   "version": "4.2.0-e7",
   "fields": [
     {
-      "key": "INPUT_PLATFORM_JUMP",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_INPUT_JUMP",
-      "group": "GAMETYPE_PLATFORMER",
-      "type": "select",
-      "options": [
-        ["INPUT_A", "A"],
-        ["INPUT_B", "B"],
-        ["INPUT_UP", "FIELD_DIRECTION_UP"]
-      ],
-      "cType": "define",
-      "defaultValue": "INPUT_A"
-    },
-    {
-      "key": "INPUT_PLATFORM_RUN",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_INPUT_RUN",
-      "group": "GAMETYPE_PLATFORMER",
-      "type": "select",
-      "options": [
-        ["INPUT_A", "A"],
-        ["INPUT_B", "B"]
-      ],
-      "cType": "define",
-      "defaultValue": "INPUT_B"
-    },
-    {
       "key": "INPUT_PLATFORM_INTERACT",
       "sceneType": "PLATFORM",
       "label": "FIELD_INPUT_INTERACT",
@@ -52,7 +25,8 @@
       "cType": "WORD",
       "defaultValue": 304,
       "min": 0,
-      "max": 16384
+      "max": 16384,
+      "editUnits": "subpxVel"
     },
     {
       "key": "plat_walk_vel",
@@ -63,30 +37,10 @@
       "cType": "WORD",
       "defaultValue": 6400,
       "min": 0,
-      "max": 16384
+      "max": 16384,
+      "editUnits": "subpxVel"
     },
-    {
-      "key": "plat_run_vel",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_RUN_VEL",
-      "group": "GAMETYPE_PLATFORMER",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 10496,
-      "min": 0,
-      "max": 16384
-    },
-    {
-      "key": "plat_climb_vel",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_CLIMB_VEL",
-      "group": "GAMETYPE_PLATFORMER",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 4000,
-      "min": 0,
-      "max": 16384
-    },
+
     {
       "key": "plat_walk_acc",
       "sceneType": "PLATFORM",
@@ -96,18 +50,21 @@
       "cType": "WORD",
       "defaultValue": 152,
       "min": 0,
-      "max": 768
+      "max": 768,
+      "editUnits": "subpxVel"
     },
+
     {
-      "key": "plat_run_acc",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_RUN_ACC",
+      "key": "plat_turn_acc",
+      "label": "Acceleration when Turning",
       "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "WORD",
-      "defaultValue": 228,
+      "defaultValue": 712,
       "min": 0,
-      "max": 768
+      "max": 2304,
+      "editUnits": "subpxVel"
     },
     {
       "key": "plat_dec",
@@ -118,19 +75,10 @@
       "cType": "WORD",
       "defaultValue": 208,
       "min": 0,
-      "max": 768
+      "max": 768,
+      "editUnits": "subpxVel"
     },
-    {
-      "key": "plat_jump_vel",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_JUMP_VEL",
-      "group": "GAMETYPE_PLATFORMER",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 16384,
-      "min": 0,
-      "max": 32768
-    },
+
     {
       "key": "plat_grav",
       "sceneType": "PLATFORM",
@@ -140,19 +88,10 @@
       "cType": "WORD",
       "defaultValue": 1792,
       "min": 0,
-      "max": 8192
+      "max": 8192,
+      "editUnits": "subpxVel"
     },
-    {
-      "key": "plat_hold_grav",
-      "sceneType": "PLATFORM",
-      "label": "FIELD_GRAVITY_JUMP",
-      "group": "GAMETYPE_PLATFORMER",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 512,
-      "min": 0,
-      "max": 8192
-    },
+
     {
       "key": "plat_max_fall_vel",
       "sceneType": "PLATFORM",
@@ -162,12 +101,14 @@
       "cType": "WORD",
       "defaultValue": 20000,
       "min": 0,
-      "max": 24560
+      "max": 24560,
+      "editUnits": "subpxVel"
     },
     {
       "key": "plat_camera_deadzone_x",
       "label": "Camera Deadzone X",
-      "group": "Platformer Plus Level Controls",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus Level Controls",
       "type": "slider",
       "cType": "BYTE",
       "defaultValue": 4,
@@ -177,7 +118,8 @@
     {
       "key": "plat_camera_block",
       "label": "Lock Player to Camera Edge",
-      "group": "Platformer Plus Level Controls",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus Level Controls",
       "type": "select",
       "options": [
         [0, "None"],
@@ -189,177 +131,10 @@
       "defaultValue": 0
     },
     {
-      "key": "plat_drop_through",
-      "label": "Drop Through Platforms",
-      "group": "Platformer Plus Level Controls",
-      "type": "select",
-      "options": [
-        [0, "Off"],
-        [1, "Down (Hold)"],
-        [2, "Down (Tap)"],
-        [3, "Down and Jump (Hold)"],
-        [4, "Down and Jump (Tap)"]
-      ],
-      "cType": "UBYTE",
-      "defaultValue": 0
-    },
-    {
-      "key": "plat_mp_group",
-      "label": "Platform Actor Collision Group",
-      "group": "Platformer Plus Level Controls",
-      "type": "select",
-      "options": [
-        [0, "None"],
-        [2, "Collision Group 1"],
-        [4, "Collision Group 2"],
-        [8, "Collision Group 3"]
-      ],
-      "cType": "UBYTE",
-      "defaultValue": 0
-    },
-    {
-      "key": "plat_solid_group",
-      "label": "Solid Actor Collision Group",
-      "group": "Platformer Plus Level Controls",
-      "type": "select",
-      "options": [
-        [0, "None"],
-        [2, "Collision Group 1"],
-        [4, "Collision Group 2"],
-        [8, "Collision Group 3"]
-      ],
-      "cType": "UBYTE",
-      "defaultValue": 0
-    },
-    {
-      "key": "plat_jump_min",
-      "label": "Minimum Jump Height",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 0,
-      "min": 0,
-      "max": 16384
-    },
-    {
-      "key": "plat_hold_jump_max",
-      "label": "Jump Frames",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "UBYTE",
-      "defaultValue": 1,
-      "min": 1,
-      "max": 100
-    },
-    {
-      "key": "plat_extra_jumps",
-      "label": "Extra Jumps (set to 255 for infinite)",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "UBYTE",
-      "defaultValue": 0,
-      "min": 0,
-      "max": 255
-    },
-    {
-      "key": "plat_jump_reduction",
-      "label": "Height Reduction on Subsequent Jumps",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 0,
-      "min": 0,
-      "max": 8192
-    },
-    {
-      "key": "plat_coyote_max",
-      "label": "Coyote Time",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "UBYTE",
-      "defaultValue": 0,
-      "min": 0,
-      "max": 10
-    },
-    {
-      "key": "plat_buffer_max",
-      "label": "Jump Buffer",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "UBYTE",
-      "defaultValue": 0,
-      "min": 0,
-      "max": 20
-    },
-    {
-      "key": "plat_wall_jump_max",
-      "label": "Wall Jumps",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "UBYTE",
-      "defaultValue": 0,
-      "min": 0,
-      "max": 255
-    },
-    {
-      "key": "plat_wall_slide",
-      "label": "Enable Wall Slide",
-      "group": "Platformer Plus",
-      "type": "select",
-      "options": [
-        [0, "Off"],
-        [1, "On"]
-      ],
-      "cType": "UBYTE",
-      "defaultValue": 0
-    },
-    {
-      "key": "plat_wall_grav",
-      "label": "Wall Slide Gravity",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 1792,
-      "min": 0,
-      "max": 8192
-    },
-    {
-      "key": "plat_wall_kick",
-      "label": "Wall Kick Off",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 600,
-      "min": 0,
-      "max": 8192
-    },
-    {
-      "key": "plat_float_input",
-      "label": "Float Input",
-      "group": "Platformer Plus",
-      "type": "select",
-      "options": [
-        [0, "None"],
-        [1, "Hold Jump"],
-        [2, "Hold Up"]
-      ],
-      "cType": "UBYTE",
-      "defaultValue": 0
-    },
-    {
-      "key": "plat_float_grav",
-      "label": "Float Fall Speed",
-      "group": "Platformer Plus",
-      "type": "slider",
-      "cType": "WORD",
-      "defaultValue": 912,
-      "min": 0,
-      "max": 8192
-    },
-    {
       "key": "plat_air_control",
       "label": "Air Control",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "Disable"],
@@ -371,7 +146,8 @@
     {
       "key": "plat_turn_control",
       "label": "Change Avatar Direction in the Air",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "Disable"],
@@ -383,17 +159,48 @@
     {
       "key": "plat_air_dec",
       "label": "Air Deceleration",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "WORD",
       "defaultValue": 208,
       "min": 0,
       "max": 768
     },
+
+    {
+      "key": "FEAT_PLATFORM_RUN",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_RUN",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "INPUT_PLATFORM_RUN",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_INPUT_RUN",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "select",
+      "options": [
+        ["INPUT_A", "A"],
+        ["INPUT_B", "B"]
+      ],
+      "cType": "define",
+      "defaultValue": "INPUT_B",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_RUN",
+          "truthy": true
+        }
+      ]
+    },
     {
       "key": "plat_run_type",
       "label": "Run Style",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "No Running"],
@@ -402,32 +209,503 @@
         [3, "Immediate Run Speed"]
       ],
       "cType": "UBYTE",
-      "defaultValue": 1
+      "defaultValue": 1,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_RUN",
+          "truthy": true
+        }
+      ]
     },
     {
-      "key": "plat_turn_acc",
-      "label": "Acceleration when Turning",
-      "group": "Platformer Plus",
+      "key": "plat_run_vel",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_RUN_VEL",
+      "group": "GAMETYPE_PLATFORMER",
       "type": "slider",
       "cType": "WORD",
-      "defaultValue": 712,
+      "defaultValue": 10496,
       "min": 0,
-      "max": 2304
+      "max": 16384,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_RUN",
+          "truthy": true
+        }
+      ]
     },
     {
-      "key": "plat_run_boost",
-      "label": "Jump Boost from Run Speed",
-      "group": "Platformer Plus",
+      "key": "plat_run_acc",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_RUN_ACC",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 228,
+      "min": 0,
+      "max": 768,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_RUN",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_JUMP",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_JUMP",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "INPUT_PLATFORM_JUMP",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_INPUT_JUMP",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "select",
+      "options": [
+        ["INPUT_A", "A"],
+        ["INPUT_B", "B"],
+        ["INPUT_UP", "FIELD_DIRECTION_UP"]
+      ],
+      "cType": "define",
+      "defaultValue": "INPUT_A",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_jump_vel",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_JUMP_VEL",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 16384,
+      "min": 0,
+      "max": 32768,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_hold_grav",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_GRAVITY_JUMP",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 512,
+      "min": 0,
+      "max": 8192,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_jump_min",
+      "label": "Minimum Jump Height",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 16384,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_hold_jump_max",
+      "label": "Jump Frames",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "UBYTE",
+      "defaultValue": 1,
+      "min": 1,
+      "max": 100,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+
+    {
+      "key": "plat_buffer_max",
+      "label": "Jump Buffer",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "UBYTE",
       "defaultValue": 0,
       "min": 0,
-      "max": 255
+      "max": 20,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_run_boost",
+      "label": "Jump Boost from Run Speed",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 255,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_RUN",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_DOUBLE_JUMP",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_DOUBLE_JUMP",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_extra_jumps",
+      "label": "Extra Jumps (set to 255 for infinite)",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 255,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_DOUBLE_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_jump_reduction",
+      "label": "Height Reduction on Subsequent Jumps",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 8192,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_DOUBLE_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_COYOTE_TIME",
+      "sceneType": "PLATFORM",
+      "label": "FEAT_PLATFORM_COYOTE_TIME",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_coyote_max",
+      "label": "Coyote Time",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 10,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_COYOTE_TIME",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_WALL_JUMP",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_WALL_JUMP",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_wall_jump_max",
+      "label": "Wall Jumps",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "min": 0,
+      "max": 255,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_WALL_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_wall_slide",
+      "label": "Enable Wall Slide",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "select",
+      "options": [
+        [0, "Off"],
+        [1, "On"]
+      ],
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_WALL_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_wall_grav",
+      "label": "Wall Slide Gravity",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 1792,
+      "min": 0,
+      "max": 8192,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_WALL_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_wall_kick",
+      "label": "Wall Kick Off",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 600,
+      "min": 0,
+      "max": 8192,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_JUMP",
+          "truthy": true
+        },
+        {
+          "key": "FEAT_PLATFORM_WALL_JUMP",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_DROP_THROUGH",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_DROP_THROUGH",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "plat_drop_through",
+      "label": "Drop Through Platforms",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus Level Controls",
+      "type": "select",
+      "options": [
+        [0, "Off"],
+        [1, "Down (Hold)"],
+        [2, "Down (Tap)"],
+        [3, "Down and Jump (Hold)"],
+        [4, "Down and Jump (Tap)"]
+      ],
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DROP_THROUGH",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_FLOAT",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_FLOAT",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "plat_float_input",
+      "label": "Float Input",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "select",
+      "options": [
+        [0, "None"],
+        [1, "Hold Jump"],
+        [2, "Hold Up"]
+      ],
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_FLOAT",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_float_grav",
+      "label": "Float Fall Speed",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 912,
+      "min": 0,
+      "max": 8192,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_FLOAT",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_LADDERS",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_LADDERS",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "plat_climb_vel",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_CLIMB_VEL",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "slider",
+      "cType": "WORD",
+      "defaultValue": 4000,
+      "min": 0,
+      "max": 16384,
+      "editUnits": "subpxVel",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_LADDERS",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_DASH",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_DASH",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
     },
     {
       "key": "plat_dash",
       "label": "Dash Input",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "Off"],
@@ -436,12 +714,19 @@
         [3, "Down and Jump"]
       ],
       "cType": "UBYTE",
-      "defaultValue": 0
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_style",
       "label": "Dash Style",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "Ground"],
@@ -449,12 +734,19 @@
         [2, "Both"]
       ],
       "cType": "UBYTE",
-      "defaultValue": 0
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_momentum",
       "label": "Dash Momentum",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "None"],
@@ -463,12 +755,19 @@
         [3, "Both"]
       ],
       "cType": "UBYTE",
-      "defaultValue": 0
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_through",
       "label": "Dash Through...",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "select",
       "options": [
         [0, "Nothing"],
@@ -477,47 +776,160 @@
         [3, "Triggers, Actors & Walls"]
       ],
       "cType": "UBYTE",
-      "defaultValue": 0
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_dist",
       "label": "Dash Distance",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "WORD",
       "defaultValue": 800,
       "min": 0,
-      "max": 1600
+      "max": 1600,
+      "editUnits": "subpx",
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_frames",
       "label": "Dash Time (frames)",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "UBYTE",
       "defaultValue": 5,
       "min": 1,
-      "max": 30
+      "max": 30,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_ready_max",
       "label": "Dash Recharge Time",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "UBYTE",
       "defaultValue": 10,
       "min": 0,
-      "max": 128
+      "max": 128,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
     },
     {
       "key": "plat_dash_deadzone",
       "label": "Dash Camera Deadzone",
-      "group": "Platformer Plus",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus",
       "type": "slider",
       "cType": "UBYTE",
       "defaultValue": 4,
       "min": 0,
-      "max": 32
+      "max": 32,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_DASH",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_SOLID_ACTORS",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_SOLID_ACTORS",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "plat_mp_group",
+      "label": "Platform Actor Collision Group",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus Level Controls",
+      "type": "select",
+      "options": [
+        [0, "None"],
+        [2, "Collision Group 1"],
+        [4, "Collision Group 2"],
+        [8, "Collision Group 3"]
+      ],
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_SOLID_ACTORS",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "plat_solid_group",
+      "label": "Solid Actor Collision Group",
+      "group": "GAMETYPE_PLATFORMER",
+      "_PPgroup": "Platformer Plus Level Controls",
+      "type": "select",
+      "options": [
+        [0, "None"],
+        [2, "Collision Group 1"],
+        [4, "Collision Group 2"],
+        [8, "Collision Group 3"]
+      ],
+      "cType": "UBYTE",
+      "defaultValue": 0,
+      "conditions": [
+        {
+          "key": "FEAT_PLATFORM_SOLID_ACTORS",
+          "truthy": true
+        }
+      ]
+    },
+    {
+      "key": "FEAT_PLATFORM_SLOPES",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_SLOPES",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "FEAT_PLATFORM_KNOCKBACK",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_KNOCKBACK",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
+    },
+    {
+      "key": "FEAT_PLATFORM_BLANK",
+      "sceneType": "PLATFORM",
+      "label": "FIELD_FEAT_PLATFORM_BLANK",
+      "group": "GAMETYPE_PLATFORMER",
+      "type": "checkbox",
+      "cType": "define",
+      "defaultValue": true
     },
     {
       "key": "shooter_scroll_speed",

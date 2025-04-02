@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import {
   EngineFieldCType,
   EngineFieldSchema,
@@ -20,10 +20,17 @@ import clamp from "shared/lib/helpers/clamp";
 import { Select } from "ui/form/Select";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { SingleValue } from "react-select";
+import { isEngineFieldVisible } from "shared/lib/engineFields/engineFieldVisible";
 
 const { editEngineFieldValue, removeEngineFieldValue } = entitiesActions;
 
 export interface EngineFieldsEditorProps {
+  searchTerm?: string;
+}
+
+export interface EngineFieldRowProps {
+  field: EngineFieldSchema;
+  values: Record<string, EngineFieldValue>;
   searchTerm?: string;
 }
 
@@ -157,6 +164,41 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
   return <div>Unknown type {field.type}</div>;
 };
 
+const EngineFieldRow = ({ field, values, searchTerm }: EngineFieldRowProps) => {
+  const dispatch = useAppDispatch();
+  const visible = useMemo(() => {
+    return isEngineFieldVisible(field, values);
+  }, [field, values]);
+  if (!visible) {
+    return <></>;
+  }
+  return (
+    <SearchableSettingRow
+      key={field.key}
+      searchTerm={searchTerm}
+      searchMatches={[l10n(field.label as L10NKey), field.key]}
+    >
+      <SettingRowLabel htmlFor={field.key} style={{ width: 300 }}>
+        {l10n(field.label as L10NKey)}
+      </SettingRowLabel>
+      <SettingRowInput>
+        <EngineFieldInput
+          field={field}
+          value={values[field.key]?.value}
+          onChange={(e) => {
+            dispatch(
+              editEngineFieldValue({
+                engineFieldId: field.key,
+                value: e,
+              })
+            );
+          }}
+        />
+      </SettingRowInput>
+    </SearchableSettingRow>
+  );
+};
+
 const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
   const dispatch = useAppDispatch();
   const values = useAppSelector(engineFieldValueSelectors.selectEntities);
@@ -185,29 +227,12 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
             {l10n("SETTINGS_ENGINE")}: {l10n(group.name as L10NKey)}
           </CardHeading>
           {group.fields.map((field) => (
-            <SearchableSettingRow
+            <EngineFieldRow
               key={field.key}
+              field={field}
+              values={values}
               searchTerm={searchTerm}
-              searchMatches={[l10n(field.label as L10NKey), field.key]}
-            >
-              <SettingRowLabel htmlFor={field.key} style={{ width: 300 }}>
-                {l10n(field.label as L10NKey)}
-              </SettingRowLabel>
-              <SettingRowInput>
-                <EngineFieldInput
-                  field={field}
-                  value={values[field.key]?.value}
-                  onChange={(e) => {
-                    dispatch(
-                      editEngineFieldValue({
-                        engineFieldId: field.key,
-                        value: e,
-                      })
-                    );
-                  }}
-                />
-              </SettingRowInput>
-            </SearchableSettingRow>
+            />
           ))}
           {!searchTerm && (
             <CardButtons>
