@@ -38,3 +38,15 @@ export const SettingRowInput = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
+
+export const SettingRowUnits = styled.label`
+  min-height: 28px;
+  min-width: 30px;
+  padding: 5px 0px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+  font-size: ${(props) => props.theme.typography.fontSize};
+`;

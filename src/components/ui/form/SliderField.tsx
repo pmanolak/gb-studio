@@ -11,6 +11,7 @@ export interface SliderFieldProps {
   placeholder?: number;
   min: number;
   max: number;
+  step?: number;
   onChange?: (value?: number) => void;
 }
 
@@ -37,6 +38,7 @@ export const SliderField: FC<SliderFieldProps> = ({
   value,
   min,
   max,
+  step,
   placeholder,
   onChange,
 }) => {
@@ -58,15 +60,22 @@ export const SliderField: FC<SliderFieldProps> = ({
           placeholder={placeholder !== undefined ? String(placeholder) : ""}
           min={min}
           max={max}
+          step={step}
           onChange={(e) => {
             const newValue =
               e.currentTarget.value.length > 0
-                ? clamp(parseInt(e.currentTarget.value), min, max)
+                ? clamp(parseFloat(e.currentTarget.value), min, max)
                 : undefined;
             onChange?.(newValue);
           }}
         />
-        <Slider value={sliderValue} min={min} max={max} onChange={onChange} />
+        <Slider
+          value={sliderValue}
+          min={min}
+          max={max}
+          step={step}
+          onChange={onChange}
+        />
       </InnerWrapper>
     </Wrapper>
   );

@@ -12,7 +12,11 @@ import { useGroupedEngineFields } from "./useGroupedEngineFields";
 import { CardAnchor, CardButtons, CardHeading } from "ui/cards/Card";
 import { SearchableCard } from "ui/cards/SearchableCard";
 import { SearchableSettingRow } from "ui/form/SearchableSettingRow";
-import { SettingRowInput, SettingRowLabel } from "ui/form/SettingRow";
+import {
+  SettingRowInput,
+  SettingRowLabel,
+  SettingRowUnits,
+} from "ui/form/SettingRow";
 import { EngineFieldValue } from "shared/lib/entities/entitiesTypes";
 import { Input } from "ui/form/Input";
 import { Checkbox } from "ui/form/Checkbox";
@@ -21,6 +25,7 @@ import { Select } from "ui/form/Select";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { SingleValue } from "react-select";
 import { isEngineFieldVisible } from "shared/lib/engineFields/engineFieldVisible";
+import { FlexRow } from "ui/spacing/Spacing";
 
 const { editEngineFieldValue, removeEngineFieldValue } = entitiesActions;
 
@@ -76,20 +81,69 @@ const fieldMax = (
   }
 };
 
+const toFieldUnits = (value: number, field: EngineFieldSchema): number => {
+  if (value === undefined) {
+    return value;
+  }
+  if (field.editUnits === "subpx") {
+    return value / 16;
+  }
+  if (field.editUnits === "subpxVel" || field.editUnits === "subpxAcc") {
+    return value / 4096;
+  }
+  return value;
+};
+
+const fromFieldUnits = (
+  value: number | undefined,
+  field: EngineFieldSchema
+): number | undefined => {
+  if (value === undefined) {
+    return undefined;
+  }
+  if (field.editUnits === "subpx") {
+    return Math.floor(value * 16);
+  }
+  if (field.editUnits === "subpxVel" || field.editUnits === "subpxAcc") {
+    return Math.floor(value * 4096);
+  }
+  return value;
+};
+
+export const EngineFieldUnits = ({ field }: { field: EngineFieldSchema }) => {
+  if (!field.editUnits) {
+    return null;
+  }
+  return (
+    <SettingRowUnits>
+      {field.editUnits === "subpx" && "px"}
+      {field.editUnits === "subpxVel" && l10n("FIELD_PIXELS_PER_FRAME_SHORT")}
+      {field.editUnits === "subpxAcc" &&
+        `${l10n("FIELD_PIXELS_PER_FRAME_SHORT")}²`}
+    </SettingRowUnits>
+  );
+};
+
 export const EngineFieldInput: FC<EngineFieldInputProps> = ({
   field,
   value,
   onChange,
 }) => {
   if (field.type === "slider") {
-    const theValue = typeof value === "number" ? Number(value) : undefined;
-    const min = fieldMin(field.min, field.cType);
-    const max = fieldMax(field.max, field.cType);
+    const theValue =
+      typeof value === "number"
+        ? toFieldUnits(Number(value), field)
+        : undefined;
+    const min = toFieldUnits(fieldMin(field.min, field.cType), field);
+    const max = toFieldUnits(fieldMax(field.max, field.cType), field);
+
     return (
       <SliderField
         name={field.key}
         value={theValue}
-        onChange={onChange}
+        onChange={(e) => {
+          onChange(fromFieldUnits(e, field));
+        }}
         placeholder={
           typeof field.defaultValue === "number"
             ? field.defaultValue
@@ -97,6 +151,7 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
         }
         min={min}
         max={max}
+        step={toFieldUnits(1, field)}
       />
     );
   }
@@ -116,7 +171,12 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
             if (Number.isNaN(parseInt(e.currentTarget.value))) {
               onChange(undefined);
             } else {
-              onChange(clamp(parseInt(e.currentTarget.value), min, max));
+              onChange(
+                fromFieldUnits(
+                  clamp(parseInt(e.currentTarget.value), min, max),
+                  field
+                )
+              );
             }
           }
         }}
@@ -182,18 +242,21 @@ const EngineFieldRow = ({ field, values, searchTerm }: EngineFieldRowProps) => {
         {l10n(field.label as L10NKey)}
       </SettingRowLabel>
       <SettingRowInput>
-        <EngineFieldInput
-          field={field}
-          value={values[field.key]?.value}
-          onChange={(e) => {
-            dispatch(
-              editEngineFieldValue({
-                engineFieldId: field.key,
-                value: e,
-              })
-            );
-          }}
-        />
+        <FlexRow>
+          <EngineFieldInput
+            field={field}
+            value={values[field.key]?.value}
+            onChange={(e) => {
+              dispatch(
+                editEngineFieldValue({
+                  engineFieldId: field.key,
+                  value: e,
+                })
+              );
+            }}
+          />
+          <EngineFieldUnits field={field} />
+        </FlexRow>
       </SettingRowInput>
     </SearchableSettingRow>
   );

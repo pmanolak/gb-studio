@@ -8,6 +8,8 @@ export type EngineFieldType = "number" | "slider" | "checkbox" | "select";
 
 export type EngineFieldCType = "UBYTE" | "UWORD" | "BYTE" | "WORD" | "define";
 
+export type EngineFieldUnitsType = "subpx" | "subpxVel" | "subpxAcc";
+
 export type EngineFieldSchema = {
   key: string;
   sceneType?: string;
@@ -21,6 +23,7 @@ export type EngineFieldSchema = {
   options?: [number, string][];
   file?: string;
   conditions?: BaseCondition[];
+  editUnits?: EngineFieldUnitsType;
 };
 
 export type SceneTypeSchema = {

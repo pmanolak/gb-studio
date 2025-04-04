@@ -24,7 +24,7 @@
       "type": "slider",
       "cType": "WORD",
       "defaultValue": 304,
-      "min": 0,
+      "min": 256,
       "max": 16384,
       "editUnits": "subpxVel"
     },
@@ -36,7 +36,7 @@
       "type": "slider",
       "cType": "WORD",
       "defaultValue": 6400,
-      "min": 0,
+      "min": 256,
       "max": 16384,
       "editUnits": "subpxVel"
     },
@@ -51,7 +51,7 @@
       "defaultValue": 152,
       "min": 0,
       "max": 768,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxAcc"
     },
 
     {
@@ -64,7 +64,7 @@
       "defaultValue": 712,
       "min": 0,
       "max": 2304,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxAcc"
     },
     {
       "key": "plat_dec",
@@ -89,7 +89,7 @@
       "defaultValue": 1792,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxAcc"
     },
 
     {
@@ -165,7 +165,8 @@
       "cType": "WORD",
       "defaultValue": 208,
       "min": 0,
-      "max": 768
+      "max": 768,
+      "editUnits": "subpxAcc"
     },
 
     {
@@ -225,7 +226,7 @@
       "type": "slider",
       "cType": "WORD",
       "defaultValue": 10496,
-      "min": 0,
+      "min": 256,
       "max": 16384,
       "editUnits": "subpxVel",
       "conditions": [
@@ -245,7 +246,7 @@
       "defaultValue": 228,
       "min": 0,
       "max": 768,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxAcc",
       "conditions": [
         {
           "key": "FEAT_PLATFORM_RUN",
@@ -310,7 +311,7 @@
       "defaultValue": 512,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxAcc",
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -553,7 +554,7 @@
       "defaultValue": 1792,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxAcc",
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -640,7 +641,6 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
-      "editUnits": "subpxVel",
       "conditions": [
         {
           "key": "FEAT_PLATFORM_FLOAT",
@@ -658,6 +658,7 @@
       "defaultValue": 912,
       "min": 0,
       "max": 8192,
+      "editUnits": "subpxAcc",
       "conditions": [
         {
           "key": "FEAT_PLATFORM_FLOAT",
