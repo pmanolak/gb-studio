@@ -1,38 +1,58 @@
-export const encodeChar = (
-  char: string,
-  mapping?: Record<string, number>
-): number => {
-  let code = char.charCodeAt(0);
-  const mappedCode = mapping?.[char.charAt(0)];
-  if (mappedCode) {
-    code = mappedCode;
+export const resolveMapping = (
+  input: string,
+  mapping?: Record<string, number | number[]>,
+): { codes: number[]; length: number } => {
+  if (!mapping) {
+    const code = input.codePointAt(0) ?? 0;
+    const length = code > 0xffff ? 2 : 1;
+    return { codes: [code], length };
   }
-  return code;
+
+  let longestMatch = "";
+  for (const key of Object.keys(mapping)) {
+    if (input.startsWith(key) && key.length > longestMatch.length) {
+      longestMatch = key;
+    }
+  }
+
+  if (longestMatch) {
+    const raw = mapping[longestMatch];
+    const codes = Array.isArray(raw) ? raw : [raw];
+    return { codes, length: longestMatch.length };
+  }
+
+  const code = input.codePointAt(0) ?? 0;
+  const length = code > 0xffff ? 2 : 1;
+  return { codes: [code], length };
 };
 
 export const encodeString = (
   inStr: string,
-  mapping?: Record<string, number>
-) => {
+  mapping?: Record<string, number | number[]>,
+): string => {
   let output = "";
-  const nlStr = inStr
-    .replace(/\\([0-9][0-9][0-9])/g, (a, b) =>
-      String.fromCharCode(parseInt(b, 8))
-    )
-    .replace(/\\x([0-9A-Fa-f]+)/g, (a, b) =>
-      String.fromCharCode(parseInt(b, 16))
+
+  const decodedStr = inStr
+    .replace(/\\([0-7]{3})/g, (_, oct) => String.fromCharCode(parseInt(oct, 8)))
+    .replace(/\\x([0-9A-Fa-f]+)/g, (_, hex) =>
+      String.fromCharCode(parseInt(hex, 16)),
     );
-  for (let i = 0; i < nlStr.length; i++) {
-    let code = nlStr.charCodeAt(i);
-    const mappedCode = mapping?.[nlStr.charAt(i)];
-    if (mappedCode) {
-      code = mappedCode;
+
+  let i = 0;
+  while (i < decodedStr.length) {
+    const slice = decodedStr.slice(i);
+    const { codes, length } = resolveMapping(slice, mapping);
+
+    for (const code of codes) {
+      if (code < 32 || code > 127 || code === 34) {
+        output += "\\" + (code & 0xff).toString(8).padStart(3, "0");
+      } else {
+        output += String.fromCharCode(code);
+      }
     }
-    if (code < 32 || code > 127 || code === 34) {
-      output += "\\" + (code & 0xff).toString(8).padStart(3, "0");
-    } else {
-      output += String.fromCharCode(code);
-    }
+
+    i += length;
   }
+
   return output;
 };
