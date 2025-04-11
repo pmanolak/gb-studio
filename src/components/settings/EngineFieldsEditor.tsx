@@ -26,6 +26,7 @@ import { useAppDispatch, useAppSelector } from "store/hooks";
 import { SingleValue } from "react-select";
 import { isEngineFieldVisible } from "shared/lib/engineFields/engineFieldVisible";
 import { FlexRow } from "ui/spacing/Spacing";
+import { useEngineFieldsDefaultValues } from "./useEngineFieldsDefaultValues";
 
 const { editEngineFieldValue, removeEngineFieldValue } = entitiesActions;
 
@@ -36,6 +37,7 @@ export interface EngineFieldsEditorProps {
 export interface EngineFieldRowProps {
   field: EngineFieldSchema;
   values: Record<string, EngineFieldValue>;
+  defaultValues: Record<string, number | string | boolean | undefined>;
   searchTerm?: string;
 }
 
@@ -47,7 +49,7 @@ export interface EngineFieldInputProps {
 
 const fieldMin = (
   customMin: number | undefined,
-  cType: EngineFieldCType
+  cType: EngineFieldCType,
 ): number => {
   let min = 0;
   if (cType === "BYTE") {
@@ -64,7 +66,7 @@ const fieldMin = (
 
 const fieldMax = (
   customMax: number | undefined,
-  cType: EngineFieldCType
+  cType: EngineFieldCType,
 ): number => {
   let max = 255;
   if (cType === "BYTE") {
@@ -96,7 +98,7 @@ const toFieldUnits = (value: number, field: EngineFieldSchema): number => {
 
 const fromFieldUnits = (
   value: number | undefined,
-  field: EngineFieldSchema
+  field: EngineFieldSchema,
 ): number | undefined => {
   if (value === undefined) {
     return undefined;
@@ -174,8 +176,8 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
               onChange(
                 fromFieldUnits(
                   clamp(parseInt(e.currentTarget.value), min, max),
-                  field
-                )
+                  field,
+                ),
               );
             }
           }
@@ -191,11 +193,12 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
     );
   }
   if (field.type === "checkbox") {
+    const theValue = value !== undefined ? value : field.defaultValue;
     return (
       <Checkbox
         id={field.key}
         name={field.key}
-        checked={value === 1 ? true : false}
+        checked={theValue === 1 ? true : false}
         onChange={(e) => onChange(e.currentTarget.checked === true ? 1 : 0)}
       />
     );
@@ -224,11 +227,16 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
   return <div>Unknown type {field.type}</div>;
 };
 
-const EngineFieldRow = ({ field, values, searchTerm }: EngineFieldRowProps) => {
+const EngineFieldRow = ({
+  field,
+  values,
+  defaultValues,
+  searchTerm,
+}: EngineFieldRowProps) => {
   const dispatch = useAppDispatch();
   const visible = useMemo(() => {
-    return isEngineFieldVisible(field, values);
-  }, [field, values]);
+    return isEngineFieldVisible(field, values, defaultValues);
+  }, [field, values, defaultValues]);
   if (!visible) {
     return <></>;
   }
@@ -251,7 +259,7 @@ const EngineFieldRow = ({ field, values, searchTerm }: EngineFieldRowProps) => {
                 editEngineFieldValue({
                   engineFieldId: field.key,
                   value: e,
-                })
+                }),
               );
             }}
           />
@@ -266,13 +274,14 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
   const dispatch = useAppDispatch();
   const values = useAppSelector(engineFieldValueSelectors.selectEntities);
   const groupedFields = useGroupedEngineFields();
+  const defaultValues = useEngineFieldsDefaultValues();
 
   const resetToDefault = (fields: EngineFieldSchema[]) => () => {
     fields.forEach((field) => {
       dispatch(
         removeEngineFieldValue({
           engineFieldId: field.key,
-        })
+        }),
       );
     });
   };
@@ -294,6 +303,7 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
               key={field.key}
               field={field}
               values={values}
+              defaultValues={defaultValues}
               searchTerm={searchTerm}
             />
           ))}

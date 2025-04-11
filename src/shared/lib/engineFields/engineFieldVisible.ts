@@ -5,14 +5,15 @@ import { evaluateConditions } from "shared/lib/conditionsFilter";
 export const isEngineFieldVisible = (
   field: EngineFieldSchema,
   args: Record<string, EngineFieldValue>,
-  ignoreConditions?: string[]
+  defaultValues: Record<string, number | string | boolean | undefined>,
+  ignoreConditions?: string[],
 ) => {
   if (!field.conditions) {
     return true;
   }
   return evaluateConditions(
     field.conditions,
-    (key) => args[key]?.value,
-    ignoreConditions
+    (key) => args[key]?.value ?? defaultValues[key],
+    ignoreConditions,
   );
 };

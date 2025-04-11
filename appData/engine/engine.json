@@ -176,7 +176,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 1
     },
     {
       "key": "INPUT_PLATFORM_RUN",
@@ -261,7 +261,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 1
     },
     {
       "key": "INPUT_PLATFORM_JUMP",
@@ -399,7 +399,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true,
+      "defaultValue": 0,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -456,7 +456,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true,
+      "defaultValue": 0,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -492,7 +492,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true,
+      "defaultValue": 0,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -595,7 +595,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "plat_drop_through",
@@ -626,7 +626,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "plat_float_input",
@@ -673,7 +673,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 1
     },
     {
       "key": "plat_climb_vel",
@@ -700,7 +700,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "plat_dash",
@@ -861,7 +861,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "plat_mp_group",
@@ -912,7 +912,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "FEAT_PLATFORM_KNOCKBACK",
@@ -921,7 +921,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "FEAT_PLATFORM_BLANK",
@@ -930,7 +930,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": true
+      "defaultValue": 0
     },
     {
       "key": "shooter_scroll_speed",
