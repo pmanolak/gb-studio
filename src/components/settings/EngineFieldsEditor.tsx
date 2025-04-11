@@ -148,7 +148,7 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
         }}
         placeholder={
           typeof field.defaultValue === "number"
-            ? field.defaultValue
+            ? toFieldUnits(field.defaultValue, field)
             : undefined
         }
         min={min}
