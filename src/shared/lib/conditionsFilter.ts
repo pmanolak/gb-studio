@@ -19,7 +19,7 @@ export const evaluateConditions = (
   conditions: BaseCondition[],
   getValue: ValueGetter,
   ignoreConditions?: string[],
-  customEval?: CustomEvaluator
+  customEval?: CustomEvaluator,
 ): boolean => {
   if (conditions.length === 0) return true;
 
@@ -45,8 +45,6 @@ export const evaluateConditions = (
       (condition.set === undefined ||
         (condition.set && value !== undefined) ||
         (!condition.set && value === undefined));
-
-    console.log({ value, conditions, baseChecks });
 
     if (!baseChecks) {
       return false;
