@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { CardHeading } from "ui/cards/Card";
 
 export const SettingRow = styled.div`
@@ -20,7 +20,12 @@ export const SettingRow = styled.div`
   }
 `;
 
-export const SettingRowLabel = styled.label`
+interface SettingRowLabelProps {
+  sectionHeading?: boolean;
+  indent?: number;
+}
+
+export const SettingRowLabel = styled.label<SettingRowLabelProps>`
   width: 300px;
   min-height: 28px;
   padding: 5px 0px;
@@ -29,6 +34,18 @@ export const SettingRowLabel = styled.label`
   flex-direction: column;
   justify-content: center;
   font-size: ${(props) => props.theme.typography.fontSize};
+  ${(props) =>
+    props.sectionHeading
+      ? css`
+          font-weight: bold;
+        `
+      : ""}
+  ${(props) =>
+    props.indent
+      ? css`
+          padding-left: ${props.indent * 20}px;
+        `
+      : ""}
 `;
 
 export const SettingRowInput = styled.div`

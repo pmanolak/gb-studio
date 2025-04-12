@@ -176,7 +176,8 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": 1
+      "defaultValue": 1,
+      "isHeading": true
     },
     {
       "key": "INPUT_PLATFORM_RUN",
@@ -190,6 +191,7 @@
       ],
       "cType": "define",
       "defaultValue": "INPUT_B",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_RUN",
@@ -211,6 +213,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 1,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_RUN",
@@ -229,6 +232,7 @@
       "min": 256,
       "max": 16384,
       "editUnits": "subpxVel",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_RUN",
@@ -247,6 +251,7 @@
       "min": 0,
       "max": 768,
       "editUnits": "subpxAcc",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_RUN",
@@ -261,7 +266,8 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
-      "defaultValue": 1
+      "defaultValue": 1,
+      "isHeading": true
     },
     {
       "key": "INPUT_PLATFORM_JUMP",
@@ -276,6 +282,7 @@
       ],
       "cType": "define",
       "defaultValue": "INPUT_A",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -294,6 +301,7 @@
       "min": 0,
       "max": 32768,
       "editUnits": "subpxVel",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -312,6 +320,7 @@
       "min": 0,
       "max": 8192,
       "editUnits": "subpxAcc",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -329,6 +338,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 16384,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -346,6 +356,7 @@
       "defaultValue": 1,
       "min": 1,
       "max": 100,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -364,6 +375,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 20,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -381,6 +393,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 255,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -400,6 +413,8 @@
       "type": "checkbox",
       "cType": "define",
       "defaultValue": 0,
+      "isHeading": true,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -417,6 +432,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 255,
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -438,6 +454,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 8192,
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -452,11 +469,13 @@
     {
       "key": "FEAT_PLATFORM_COYOTE_TIME",
       "sceneType": "PLATFORM",
-      "label": "FEAT_PLATFORM_COYOTE_TIME",
+      "label": "FIELD_FEAT_PLATFORM_COYOTE_TIME",
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
       "defaultValue": 0,
+      "isHeading": true,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -474,6 +493,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 10,
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -493,6 +513,8 @@
       "type": "checkbox",
       "cType": "define",
       "defaultValue": 0,
+      "isHeading": true,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -510,6 +532,7 @@
       "defaultValue": 0,
       "min": 0,
       "max": 255,
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -533,6 +556,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -555,6 +579,7 @@
       "min": 0,
       "max": 8192,
       "editUnits": "subpxAcc",
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -577,6 +602,7 @@
       "min": 0,
       "max": 8192,
       "editUnits": "subpxVel",
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_JUMP",
@@ -595,6 +621,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {
@@ -612,6 +639,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 2,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DROP_THROUGH",
@@ -626,6 +654,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {
@@ -641,6 +670,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_FLOAT",
@@ -659,6 +689,7 @@
       "min": 0,
       "max": 8192,
       "editUnits": "subpxAcc",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_FLOAT",
@@ -673,6 +704,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 1
     },
     {
@@ -686,6 +718,7 @@
       "min": 0,
       "max": 16384,
       "editUnits": "subpxVel",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_LADDERS",
@@ -700,6 +733,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {
@@ -716,6 +750,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -736,6 +771,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -757,6 +793,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -778,6 +815,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -796,6 +834,7 @@
       "min": 0,
       "max": 1600,
       "editUnits": "subpx",
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -813,6 +852,7 @@
       "defaultValue": 5,
       "min": 1,
       "max": 30,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -830,6 +870,7 @@
       "defaultValue": 10,
       "min": 0,
       "max": 128,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -847,6 +888,7 @@
       "defaultValue": 4,
       "min": 0,
       "max": 32,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_DASH",
@@ -861,6 +903,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {
@@ -877,6 +920,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_SOLID_ACTORS",
@@ -898,6 +942,7 @@
       ],
       "cType": "UBYTE",
       "defaultValue": 0,
+      "indent": 1,
       "conditions": [
         {
           "key": "FEAT_PLATFORM_SOLID_ACTORS",
@@ -912,6 +957,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {
@@ -921,6 +967,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {
@@ -930,6 +977,7 @@
       "group": "GAMETYPE_PLATFORMER",
       "type": "checkbox",
       "cType": "define",
+      "isHeading": true,
       "defaultValue": 0
     },
     {

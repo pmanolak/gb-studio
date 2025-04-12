@@ -246,7 +246,12 @@ const EngineFieldRow = ({
       searchTerm={searchTerm}
       searchMatches={[l10n(field.label as L10NKey), field.key]}
     >
-      <SettingRowLabel htmlFor={field.key} style={{ width: 300 }}>
+      <SettingRowLabel
+        htmlFor={field.key}
+        style={{ width: 300 }}
+        sectionHeading={field.isHeading}
+        indent={field.indent}
+      >
         {l10n(field.label as L10NKey)}
       </SettingRowLabel>
       <SettingRowInput>

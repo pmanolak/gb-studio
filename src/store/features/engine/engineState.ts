@@ -24,6 +24,8 @@ export type EngineFieldSchema = {
   file?: string;
   conditions?: BaseCondition[];
   editUnits?: EngineFieldUnitsType;
+  isHeading?: boolean;
+  indent?: number;
 };
 
 export type SceneTypeSchema = {
