@@ -302,7 +302,7 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({
         return null;
       }
       return (
-        <SettingsSidebarContainer>
+        <SettingsSidebarContainer key={group.name}>
           {group.fields.map((field) => (
             <EngineFieldRow
               key={field.key}
