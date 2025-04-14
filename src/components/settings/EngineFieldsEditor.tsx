@@ -16,6 +16,7 @@ import {
   SettingRowInput,
   SettingRowLabel,
   SettingRowUnits,
+  SettingsSidebarContainer,
 } from "ui/form/SettingRow";
 import { EngineFieldValue } from "shared/lib/entities/entitiesTypes";
 import { Input } from "ui/form/Input";
@@ -32,6 +33,7 @@ const { editEngineFieldValue, removeEngineFieldValue } = entitiesActions;
 
 export interface EngineFieldsEditorProps {
   searchTerm?: string;
+  sceneType?: string;
 }
 
 export interface EngineFieldRowProps {
@@ -275,7 +277,10 @@ const EngineFieldRow = ({
   );
 };
 
-const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
+const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({
+  searchTerm,
+  sceneType,
+}) => {
   const dispatch = useAppDispatch();
   const values = useAppSelector(engineFieldValueSelectors.selectEntities);
   const groupedFields = useGroupedEngineFields();
@@ -291,6 +296,27 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
     });
   };
 
+  if (sceneType) {
+    return groupedFields.map((group) => {
+      if (group.sceneType !== sceneType) {
+        return null;
+      }
+      return (
+        <SettingsSidebarContainer>
+          {group.fields.map((field) => (
+            <EngineFieldRow
+              key={field.key}
+              field={field}
+              values={values}
+              defaultValues={defaultValues}
+              searchTerm={searchTerm}
+            />
+          ))}
+        </SettingsSidebarContainer>
+      );
+    });
+  }
+
   return (
     <>
       {groupedFields.map((group) => (
@@ -299,10 +325,14 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({ searchTerm }) => {
           searchTerm={searchTerm}
           searchMatches={group.searchMatches}
         >
-          <CardAnchor id={`settings${group.name}`} />
-          <CardHeading>
-            {l10n("SETTINGS_ENGINE")}: {l10n(group.name as L10NKey)}
-          </CardHeading>
+          {!sceneType && (
+            <>
+              <CardAnchor id={`settings${group.name}`} />
+              <CardHeading>
+                {l10n("SETTINGS_ENGINE")}: {l10n(group.name as L10NKey)}
+              </CardHeading>
+            </>
+          )}
           {group.fields.map((field) => (
             <EngineFieldRow
               key={field.key}

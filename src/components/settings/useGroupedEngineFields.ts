@@ -6,6 +6,7 @@ import { EngineFieldSchema } from "store/features/engine/engineState";
 
 export type EngineFieldGroup = {
   name: string;
+  sceneType?: string;
   searchMatches: string[];
   fields: EngineFieldSchema[];
 };
@@ -21,14 +22,15 @@ export const useGroupedEngineFields = () => {
         const groupFields = fields.filter((f) => f.group === g);
         return {
           name: g,
+          sceneType: groupFields[0].sceneType,
           searchMatches: ([] as string[]).concat(
             l10n(g as L10NKey),
             groupFields.map((field) => field.key),
-            groupFields.map((field) => l10n(field.label as L10NKey))
+            groupFields.map((field) => l10n(field.label as L10NKey)),
           ),
           fields: groupFields,
         };
-      })
+      }),
     );
   }, [fields]);
 

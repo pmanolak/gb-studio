@@ -67,3 +67,16 @@ export const SettingRowUnits = styled.label`
   margin-left: 10px;
   font-size: ${(props) => props.theme.typography.fontSize};
 `;
+
+export const SettingsSidebarContainer = styled.div`
+  background: ${(props) => props.theme.colors.card.background};
+  color: ${(props) => props.theme.colors.card.text};
+  padding: 0px 10px;
+  border-top: 1px solid ${(props) => props.theme.colors.card.border};
+  width: 100%;
+  box-sizing: border-box;
+
+  ${SettingRow}:last-child {
+    border-bottom: 0;
+  }
+`;
