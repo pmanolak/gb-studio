@@ -77,6 +77,7 @@ import CachedScroll from "ui/util/CachedScroll";
 import { ColorModeOverrideSelect } from "components/forms/ColorModeOverrideSelect";
 import { ColorModeOverrideSetting } from "shared/lib/resources/types";
 import EngineFieldsEditor from "components/settings/EngineFieldsEditor";
+import { useGroupedEngineFields } from "components/settings/useGroupedEngineFields";
 
 interface SceneEditorProps {
   id: string;
@@ -226,6 +227,7 @@ export const SceneEditor = ({ id }: SceneEditorProps) => {
     (state) => state.editor.lockScriptEditor
   );
   const [showSymbols, setShowSymbols] = useState(false);
+  const groupedEngineFields = useGroupedEngineFields(scene?.type);
 
   const dispatch = useAppDispatch();
 
@@ -675,21 +677,25 @@ export const SceneEditor = ({ id }: SceneEditorProps) => {
                         value={scene.type}
                         onChange={onChangeType}
                       />
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <Button
-                          style={{
-                            padding: "5px 0",
-                            minWidth: 28,
-                            marginLeft: 4,
-                            marginBottom: 4,
-                          }}
-                          variant={settingsOpen ? "primary" : "transparent"}
-                          onClick={onToggleSettingsOpen}
-                          title={l10n("SETTINGS")}
+                      {groupedEngineFields.length > 0 && (
+                        <div
+                          style={{ display: "flex", flexDirection: "column" }}
                         >
-                          <SettingsIcon />
-                        </Button>
-                      </div>
+                          <Button
+                            style={{
+                              padding: "5px 0",
+                              minWidth: 28,
+                              marginLeft: 4,
+                              marginBottom: 4,
+                            }}
+                            variant={settingsOpen ? "primary" : "transparent"}
+                            onClick={onToggleSettingsOpen}
+                            title={l10n("SETTINGS")}
+                          >
+                            <SettingsIcon />
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   </FormField>
                 </FormRow>

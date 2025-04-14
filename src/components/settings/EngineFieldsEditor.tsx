@@ -283,7 +283,7 @@ const EngineFieldsEditor: FC<EngineFieldsEditorProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const values = useAppSelector(engineFieldValueSelectors.selectEntities);
-  const groupedFields = useGroupedEngineFields();
+  const groupedFields = useGroupedEngineFields(sceneType);
   const defaultValues = useEngineFieldsDefaultValues();
 
   const resetToDefault = (fields: EngineFieldSchema[]) => () => {
