@@ -21,8 +21,8 @@ export const SettingRow = styled.div`
 `;
 
 interface SettingRowLabelProps {
-  sectionHeading?: boolean;
-  indent?: number;
+  $sectionHeading?: boolean;
+  $indent?: number;
 }
 
 export const SettingRowLabel = styled.label<SettingRowLabelProps>`
@@ -35,15 +35,15 @@ export const SettingRowLabel = styled.label<SettingRowLabelProps>`
   justify-content: center;
   font-size: ${(props) => props.theme.typography.fontSize};
   ${(props) =>
-    props.sectionHeading
+    props.$sectionHeading
       ? css`
           font-weight: bold;
         `
       : ""}
   ${(props) =>
-    props.indent
+    props.$indent
       ? css`
-          padding-left: ${props.indent * 20}px;
+          padding-left: ${props.$indent * 20}px;
         `
       : ""}
 `;

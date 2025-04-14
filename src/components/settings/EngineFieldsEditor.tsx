@@ -251,8 +251,8 @@ const EngineFieldRow = ({
       <SettingRowLabel
         htmlFor={field.key}
         style={{ width: 300 }}
-        sectionHeading={field.isHeading}
-        indent={field.indent}
+        $sectionHeading={field.isHeading}
+        $indent={field.indent}
       >
         {l10n(field.label as L10NKey)}
       </SettingRowLabel>
