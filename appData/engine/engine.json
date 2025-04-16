@@ -5,8 +5,9 @@
       "key": "INPUT_PLATFORM_INTERACT",
       "sceneType": "PLATFORM",
       "label": "FIELD_INPUT_INTERACT",
+      "description": "FIELD_INPUT_INTERACT_DESC",
       "group": "GAMETYPE_PLATFORMER",
-      "type": "select",
+      "type": "togglebuttons",
       "options": [
         ["INPUT_A", "A"],
         ["INPUT_B", "B"],
@@ -26,7 +27,7 @@
       "defaultValue": 304,
       "min": 256,
       "max": 16384,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxVelPrecise"
     },
     {
       "key": "plat_walk_vel",
@@ -38,7 +39,7 @@
       "defaultValue": 6400,
       "min": 256,
       "max": 16384,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxVelPrecise"
     },
 
     {
@@ -51,7 +52,7 @@
       "defaultValue": 152,
       "min": 0,
       "max": 768,
-      "editUnits": "subpxAcc"
+      "editUnits": "subpxAccPrecise"
     },
 
     {
@@ -64,7 +65,7 @@
       "defaultValue": 712,
       "min": 0,
       "max": 2304,
-      "editUnits": "subpxAcc"
+      "editUnits": "subpxAccPrecise"
     },
     {
       "key": "plat_dec",
@@ -76,7 +77,7 @@
       "defaultValue": 208,
       "min": 0,
       "max": 768,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxVelPrecise"
     },
 
     {
@@ -89,7 +90,7 @@
       "defaultValue": 1792,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxAcc"
+      "editUnits": "subpxAccPrecise"
     },
 
     {
@@ -102,7 +103,7 @@
       "defaultValue": 20000,
       "min": 0,
       "max": 24560,
-      "editUnits": "subpxVel"
+      "editUnits": "subpxVelPrecise"
     },
     {
       "key": "plat_camera_deadzone_x",
@@ -166,7 +167,7 @@
       "defaultValue": 208,
       "min": 0,
       "max": 768,
-      "editUnits": "subpxAcc"
+      "editUnits": "subpxAccPrecise"
     },
 
     {
@@ -231,7 +232,7 @@
       "defaultValue": 10496,
       "min": 256,
       "max": 16384,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxVelPrecise",
       "indent": 1,
       "conditions": [
         {
@@ -250,7 +251,7 @@
       "defaultValue": 228,
       "min": 0,
       "max": 768,
-      "editUnits": "subpxAcc",
+      "editUnits": "subpxAccPrecise",
       "indent": 1,
       "conditions": [
         {
@@ -300,7 +301,7 @@
       "defaultValue": 16384,
       "min": 0,
       "max": 32768,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxVelPrecise",
       "indent": 1,
       "conditions": [
         {
@@ -319,7 +320,7 @@
       "defaultValue": 512,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxAcc",
+      "editUnits": "subpxAccPrecise",
       "indent": 1,
       "conditions": [
         {
@@ -578,7 +579,7 @@
       "defaultValue": 1792,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxAcc",
+      "editUnits": "subpxAccPrecise",
       "indent": 2,
       "conditions": [
         {
@@ -601,7 +602,7 @@
       "defaultValue": 600,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxVelPrecise",
       "indent": 2,
       "conditions": [
         {
@@ -688,7 +689,7 @@
       "defaultValue": 912,
       "min": 0,
       "max": 8192,
-      "editUnits": "subpxAcc",
+      "editUnits": "subpxAccPrecise",
       "indent": 1,
       "conditions": [
         {
@@ -717,7 +718,7 @@
       "defaultValue": 4000,
       "min": 0,
       "max": 16384,
-      "editUnits": "subpxVel",
+      "editUnits": "subpxVelPrecise",
       "indent": 1,
       "conditions": [
         {
@@ -984,19 +985,22 @@
       "key": "shooter_scroll_speed",
       "sceneType": "SHMUP",
       "label": "FIELD_SCROLL_SPEED",
+      "description": "FIELD_SCROLL_SPEED_DESC",
       "group": "GAMETYPE_SHMUP",
       "type": "slider",
       "cType": "UBYTE",
       "defaultValue": 16,
       "min": 0,
-      "max": 64
+      "max": 64,
+      "editUnits": "subpxVel"
     },
     {
       "key": "INPUT_TOPDOWN_INTERACT",
       "sceneType": "TOPDOWN",
       "label": "FIELD_INPUT_INTERACT",
+      "description": "FIELD_INPUT_INTERACT_DESC",
       "group": "GAMETYPE_TOP_DOWN",
-      "type": "select",
+      "type": "togglebuttons",
       "options": [
         ["INPUT_A", "A"],
         ["INPUT_B", "B"]
@@ -1008,6 +1012,7 @@
       "key": "topdown_grid",
       "sceneType": "TOPDOWN",
       "label": "FIELD_GRID_SIZE",
+      "description": "FIELD_GRID_SIZE_DESC",
       "group": "GAMETYPE_TOP_DOWN",
       "type": "select",
       "options": [
@@ -1020,6 +1025,7 @@
     {
       "key": "fade_style",
       "label": "FIELD_FADE_STYLE",
+      "description": "FIELD_FADE_STYLE_DESC",
       "group": "SETTINGS_FADE",
       "type": "select",
       "options": [

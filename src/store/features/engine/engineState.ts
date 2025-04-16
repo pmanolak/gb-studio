@@ -8,12 +8,18 @@ export type EngineFieldType = "number" | "slider" | "checkbox" | "select";
 
 export type EngineFieldCType = "UBYTE" | "UWORD" | "BYTE" | "WORD" | "define";
 
-export type EngineFieldUnitsType = "subpx" | "subpxVel" | "subpxAcc";
+export type EngineFieldUnitsType =
+  | "subpx"
+  | "subpxVel"
+  | "subpxAcc"
+  | "subpxVelPrecise" // Extra precision - take top 8-bits as per frame movement
+  | "subpxAccPrecise";
 
 export type EngineFieldSchema = {
   key: string;
   sceneType?: string;
   label: string;
+  description?: string;
   group: string;
   type: EngineFieldType;
   cType: EngineFieldCType;

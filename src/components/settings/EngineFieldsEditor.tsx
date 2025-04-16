@@ -28,6 +28,7 @@ import { SingleValue } from "react-select";
 import { isEngineFieldVisible } from "shared/lib/engineFields/engineFieldVisible";
 import { FlexRow } from "ui/spacing/Spacing";
 import { useEngineFieldsDefaultValues } from "./useEngineFieldsDefaultValues";
+import ToggleButtons from "ui/form/ToggleButtons";
 
 const { editEngineFieldValue, removeEngineFieldValue } = entitiesActions;
 
@@ -89,10 +90,17 @@ const toFieldUnits = (value: number, field: EngineFieldSchema): number => {
   if (value === undefined) {
     return value;
   }
-  if (field.editUnits === "subpx") {
+  if (
+    field.editUnits === "subpx" ||
+    field.editUnits === "subpxVel" ||
+    field.editUnits === "subpxAcc"
+  ) {
     return value / 16;
   }
-  if (field.editUnits === "subpxVel" || field.editUnits === "subpxAcc") {
+  if (
+    field.editUnits === "subpxVelPrecise" ||
+    field.editUnits === "subpxAccPrecise"
+  ) {
     return value / 4096;
   }
   return value;
@@ -105,10 +113,17 @@ const fromFieldUnits = (
   if (value === undefined) {
     return undefined;
   }
-  if (field.editUnits === "subpx") {
+  if (
+    field.editUnits === "subpx" ||
+    field.editUnits === "subpxVel" ||
+    field.editUnits === "subpxAcc"
+  ) {
     return Math.floor(value * 16);
   }
-  if (field.editUnits === "subpxVel" || field.editUnits === "subpxAcc") {
+  if (
+    field.editUnits === "subpxVelPrecise" ||
+    field.editUnits === "subpxAccPrecise"
+  ) {
     return Math.floor(value * 4096);
   }
   return value;
@@ -121,8 +136,11 @@ export const EngineFieldUnits = ({ field }: { field: EngineFieldSchema }) => {
   return (
     <SettingRowUnits>
       {field.editUnits === "subpx" && "px"}
-      {field.editUnits === "subpxVel" && l10n("FIELD_PIXELS_PER_FRAME_SHORT")}
-      {field.editUnits === "subpxAcc" &&
+      {(field.editUnits === "subpxVel" ||
+        field.editUnits === "subpxVelPrecise") &&
+        l10n("FIELD_PIXELS_PER_FRAME_SHORT")}
+      {(field.editUnits === "subpxAcc" ||
+        field.editUnits === "subpxAccPrecise") &&
         `${l10n("FIELD_PIXELS_PER_FRAME_SHORT")}²`}
     </SettingRowUnits>
   );
@@ -226,6 +244,46 @@ export const EngineFieldInput: FC<EngineFieldInputProps> = ({
       />
     );
   }
+  if (field.type === "select") {
+    const theValue = value !== undefined ? value : field.defaultValue;
+    const options = (field.options || []).map(([value, label]) => ({
+      value,
+      label: l10n(label as L10NKey),
+    }));
+    const selectedOption = options.find((option) => option.value === theValue);
+    return (
+      <Select
+        id={field.key}
+        name={field.key}
+        value={selectedOption}
+        onChange={(e: SingleValue<{ value: number }>) => {
+          if (e) {
+            onChange(e.value);
+          }
+        }}
+        options={options}
+      />
+    );
+  }
+  if (field.type === "togglebuttons") {
+    const theValue = value !== undefined ? value : field.defaultValue;
+    const options = (field.options || []).map(
+      ([value, label]) => [value, l10n(label as L10NKey)] as [number, string],
+    );
+    return (
+      <ToggleButtons
+        name={field.key}
+        value={theValue as number}
+        onChange={(e: number) => {
+          if (e) {
+            onChange(e);
+          }
+        }}
+        options={options}
+        allowMultiple={false}
+      />
+    );
+  }
   return <div>Unknown type {field.type}</div>;
 };
 
@@ -253,6 +311,7 @@ const EngineFieldRow = ({
         style={{ width: 300 }}
         $sectionHeading={field.isHeading}
         $indent={field.indent}
+        title={field.description && l10n(field.description as L10NKey)}
       >
         {l10n(field.label as L10NKey)}
       </SettingRowLabel>
