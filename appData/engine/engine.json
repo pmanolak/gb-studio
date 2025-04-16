@@ -299,7 +299,8 @@
 
     {
       "key": "plat_hold_jump_max",
-      "label": "Jump Frames",
+      "label": "FIELD_JUMP_FRAMES",
+      "description": "FIELD_JUMP_FRAMES_DESC",
       "group": "GAMETYPE_PLATFORMER",
       "type": "slider",
       "cType": "UBYTE",
@@ -319,6 +320,7 @@
       "key": "plat_hold_grav",
       "sceneType": "PLATFORM",
       "label": "FIELD_GRAVITY_JUMP",
+      "description": "FIELD_GRAVITY_JUMP_DESC",
       "group": "GAMETYPE_PLATFORMER",
       "type": "slider",
       "cType": "WORD",
@@ -355,7 +357,8 @@
     },
     {
       "key": "plat_buffer_max",
-      "label": "Jump Buffer",
+      "label": "FIELD_JUMP_BUFFER",
+      "description": "FIELD_JUMP_BUFFER_DESC",
       "group": "GAMETYPE_PLATFORMER",
       "type": "slider",
       "cType": "UBYTE",
