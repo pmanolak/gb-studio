@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix Music Tracker keyboard shortcuts when using non-QWERTY layouts (QWERTZ, AZERTY, Dvorak, etc.)
 - Fix issue where off-screen actors would sometimes be visible on scene load
 - Fix issue where scenes with unicode character names could cause resources to be deleted when saving project
+- Fix issue where editing an FX Hammer file wouldn't correctly update the number of sound effects available
 
 ## [4.2.1] - 2026-02-13
 
