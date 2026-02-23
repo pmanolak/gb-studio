@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix issue where off-screen actors would sometimes be visible on scene load
 - Fix issue where scenes with unicode character names could cause resources to be deleted when saving project
 - Fix issue where editing an FX Hammer file wouldn't correctly update the number of sound effects available
+- Fix issue where resizing a background image could cause builds to fail until the project was reloaded
 
 ## [4.2.1] - 2026-02-13
 
