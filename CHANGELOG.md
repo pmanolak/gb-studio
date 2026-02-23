@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Deprecate legacy `scriptBuilder` plugin APIs. Usage now triggers a warning indicating the replacement function
 
+### Fixed
+
+- Fix issue where changing Music Tracker Keyboard Layout setting would not take effect until the project was reloaded
+
 ## [4.2.1] - 2026-02-13
 
 ### Fixed
