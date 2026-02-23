@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix issue where changing Music Tracker Keyboard Layout setting would not take effect until the project was reloaded
+- Fix Music Tracker keyboard shortcuts when using non-QWERTY layouts (QWERTZ, AZERTY, Dvorak, etc.)
 
 ## [4.2.1] - 2026-02-13
 
