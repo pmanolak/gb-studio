@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add "Set Font" event to change the current default font from scripts [@Mico27](https://github.com/Mico27)
 - Allow engine plugins to define multiple alternate versions with rules based on the current engine version, and other installed plugins.
 - Allow engine plugins to provide `.patch` files in unified diff format to modify existing engine files instead of replacing them entirely.
+- Add right-click context menu in World view to quickly add scenes, add notes, and delete selection
 
 ### Changed
 

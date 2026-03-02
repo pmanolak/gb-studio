@@ -1058,6 +1058,9 @@ const editorSlice = createSlice({
         state.sceneSelectionIds = [action.payload.sceneId];
         state.scriptEventSelectionIds = [];
       })
+      .addCase(entitiesActions.removeScene, (state) => {
+        state.sceneSelectionIds = [];
+      })
       .addCase(entitiesActions.addActor, (state, action) => {
         state.type = "actor";
         state.scene = action.payload.sceneId;
@@ -1085,6 +1088,9 @@ const editorSlice = createSlice({
         state.worldFocus = true;
         state.sceneSelectionIds = [action.payload.noteId];
         state.scriptEventSelectionIds = [];
+      })
+      .addCase(entitiesActions.removeNote, (state) => {
+        state.sceneSelectionIds = [];
       })
       .addCase(entitiesActions.addMetasprite, (state, action) => {
         state.selectedMetaspriteId = action.payload.metaspriteId;
