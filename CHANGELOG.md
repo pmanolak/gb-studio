@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow engine plugins to provide `.patch` files in unified diff format to modify existing engine files instead of replacing them entirely.
 - Add right-click context menu in World view to quickly add scenes, add notes, and delete selection
 - Add support for adding notes to sprites in Sprite Editor
+- Add support for dragging and dropping entities between folders in the navigator panels
 
 ### Changed
 

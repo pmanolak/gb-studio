@@ -78,6 +78,8 @@ import {
   getMetaspriteTilesForSpriteSheet,
   nextIndexedName,
   defaultLocalisedNoteName,
+  applyReparentFolderToCollection,
+  applyReparentEntityToCollection,
 } from "shared/lib/entities/entitiesHelpers";
 import spriteActions from "store/features/sprite/spriteActions";
 import { isValueNumber } from "shared/lib/scriptValue/types";
@@ -124,6 +126,12 @@ import {
   sortSubsetStringArray,
 } from "shared/lib/helpers/array";
 import { resizeTiles } from "shared/lib/helpers/tiles";
+import {
+  getBaseName,
+  joinPath,
+  normalizePath,
+  reparentEntityPath,
+} from "shared/lib/helpers/virtualFilesystem";
 
 const MIN_SCENE_X = 60;
 const MIN_SCENE_Y = 30;
@@ -1086,6 +1094,39 @@ const moveWorldEntities: CaseReducer<
   }
 };
 
+const reparentWorldFolder: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    fromPath: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentFolderToCollection(
+    state.scenes.entities,
+    action.payload.fromPath,
+    action.payload.toPath,
+  );
+  applyReparentFolderToCollection(
+    state.notes.entities,
+    action.payload.fromPath,
+    action.payload.toPath,
+  );
+};
+
+const reparentScene: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    sceneId: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentEntityToCollection(
+    state.scenes.entities,
+    action.payload.sceneId,
+    action.payload.toPath,
+  );
+};
+
 /**************************************************************************
  * Notes
  */
@@ -1154,6 +1195,20 @@ const removeNotes: CaseReducer<
   }>
 > = (state, action) => {
   notesAdapter.removeMany(state.notes, action.payload.noteIds);
+};
+
+const reparentNote: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    noteId: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentEntityToCollection(
+    state.notes.entities,
+    action.payload.noteId,
+    action.payload.toPath,
+  );
 };
 
 /**************************************************************************
@@ -2427,6 +2482,34 @@ const removeActorPrefab: CaseReducer<
   );
 };
 
+const reparentActorPrefabsFolder: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    fromPath: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentFolderToCollection(
+    state.actorPrefabs.entities,
+    action.payload.fromPath,
+    action.payload.toPath,
+  );
+};
+
+const reparentActorPrefab: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    actorPrefabId: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentEntityToCollection(
+    state.actorPrefabs.entities,
+    action.payload.actorPrefabId,
+    action.payload.toPath,
+  );
+};
+
 /**************************************************************************
  * Trigger Prefabs
  */
@@ -2486,6 +2569,34 @@ const removeTriggerPrefab: CaseReducer<
   triggerPrefabsAdapter.removeOne(
     state.triggerPrefabs,
     action.payload.triggerPrefabId,
+  );
+};
+
+const reparentTriggerPrefabsFolder: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    fromPath: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentFolderToCollection(
+    state.triggerPrefabs.entities,
+    action.payload.fromPath,
+    action.payload.toPath,
+  );
+};
+
+const reparentTriggerPrefab: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    triggerPrefabId: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentEntityToCollection(
+    state.triggerPrefabs.entities,
+    action.payload.triggerPrefabId,
+    action.payload.toPath,
   );
 };
 
@@ -4042,6 +4153,34 @@ const refreshCustomEventArgs: CaseReducer<
   );
 };
 
+const reparentCustomEventsFolder: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    fromPath: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentFolderToCollection(
+    state.customEvents.entities,
+    action.payload.fromPath,
+    action.payload.toPath,
+  );
+};
+
+const reparentCustomEvent: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    customEventId: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentEntityToCollection(
+    state.customEvents.entities,
+    action.payload.customEventId,
+    action.payload.toPath,
+  );
+};
+
 /**************************************************************************
  * Script Events
  */
@@ -4753,6 +4892,8 @@ const entitiesSlice = createSlice({
     paintColor,
     setSceneExtractedPalettes,
     moveWorldEntities,
+    reparentWorldFolder,
+    reparentScene,
 
     /**************************************************************************
      * Notes
@@ -4773,6 +4914,7 @@ const entitiesSlice = createSlice({
     editNote,
     removeNote,
     removeNotes,
+    reparentNote,
 
     /**************************************************************************
      * Actors
@@ -4876,6 +5018,8 @@ const entitiesSlice = createSlice({
 
     editActorPrefab,
     removeActorPrefab,
+    reparentActorPrefabsFolder,
+    reparentActorPrefab,
 
     /**************************************************************************
      * Trigger Prefabs
@@ -4898,6 +5042,8 @@ const entitiesSlice = createSlice({
 
     editTriggerPrefab,
     removeTriggerPrefab,
+    reparentTriggerPrefabsFolder,
+    reparentTriggerPrefab,
 
     /**************************************************************************
      * Backgrounds
@@ -5116,6 +5262,8 @@ const entitiesSlice = createSlice({
         };
       },
     },
+    reparentCustomEventsFolder,
+    reparentCustomEvent,
 
     /**************************************************************************
      * Script Events
