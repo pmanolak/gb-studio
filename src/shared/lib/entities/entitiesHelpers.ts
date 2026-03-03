@@ -681,7 +681,9 @@ export const customEventName = (
 
 export const constantName = (constant: NamedEntity, constantIndex: number) => {
   if (constant.name.endsWith("/") || constant.name.endsWith("\\")) {
-    return `${constant.name}${defaultLocalisedConstantName(constantIndex)}`;
+    return `${constant.name}${defaultLocalisedConstantName(constantIndex)}`
+      .toLocaleUpperCase()
+      .replace(/\s/g, "_");
   }
   return (constant.name || defaultLocalisedConstantName(constantIndex))
     .toLocaleUpperCase()

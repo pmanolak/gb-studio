@@ -126,12 +126,6 @@ import {
   sortSubsetStringArray,
 } from "shared/lib/helpers/array";
 import { resizeTiles } from "shared/lib/helpers/tiles";
-import {
-  getBaseName,
-  joinPath,
-  normalizePath,
-  reparentEntityPath,
-} from "shared/lib/helpers/virtualFilesystem";
 
 const MIN_SCENE_X = 60;
 const MIN_SCENE_Y = 30;
@@ -3974,6 +3968,34 @@ const removeConstant: CaseReducer<
   constantsAdapter.removeOne(state.constants, action.payload.constantId);
 };
 
+const reparentConstantsFolder: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    fromPath: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentFolderToCollection(
+    state.constants.entities,
+    action.payload.fromPath,
+    action.payload.toPath,
+  );
+};
+
+const reparentConstant: CaseReducer<
+  EntitiesState,
+  PayloadAction<{
+    constantId: string;
+    toPath: string;
+  }>
+> = (state, action) => {
+  applyReparentEntityToCollection(
+    state.constants.entities,
+    action.payload.constantId,
+    action.payload.toPath,
+  );
+};
+
 /**************************************************************************
  * Palettes
  */
@@ -5192,6 +5214,8 @@ const entitiesSlice = createSlice({
     editConstant,
     renameConstant,
     removeConstant,
+    reparentConstantsFolder,
+    reparentConstant,
 
     /**************************************************************************
      * Palettes
