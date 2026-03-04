@@ -1102,6 +1102,10 @@ ipcMain.handle(
     if (!filename || filename.length === 0) {
       return false;
     }
+    // Prevent moving plugin assets
+    if (asset.plugin) {
+      return false;
+    }
     const projectRoot = Path.dirname(projectPath);
     const originalFilename = assetFilename(projectRoot, assetType, asset);
     const newFilename = ensureNonEmptyBasename(
@@ -1151,6 +1155,11 @@ ipcMain.handle(
   async (_event, assetType: AssetType, asset: Asset): Promise<boolean> => {
     const projectRoot = Path.dirname(projectPath);
     const filename = assetFilename(projectRoot, assetType, asset);
+
+    // Prevent removing plugin assets
+    if (asset.plugin) {
+      return false;
+    }
 
     // Check project has permission to access this asset
     guardAssetWithinProject(filename, projectRoot);
