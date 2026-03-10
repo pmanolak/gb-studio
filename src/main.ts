@@ -51,6 +51,7 @@ import {
   buildUUID,
   EMULATOR_MUTED_SETTING_KEY,
   LOCALE_SETTING_KEY,
+  musicTemplatesRoot,
   projectTemplatesRoot,
   THEME_SETTING_KEY,
 } from "consts";
@@ -1776,7 +1777,7 @@ ipcMain.handle(
     // Check project has permission to access this asset
     guardAssetWithinProject(filename, projectRoot);
 
-    const templatePath = `${projectTemplatesRoot}/gbhtml/assets/music/template.uge`;
+    const templatePath = `${musicTemplatesRoot}/template.uge`;
     const copy2 = async (
       oPath: string,
       path: string,
