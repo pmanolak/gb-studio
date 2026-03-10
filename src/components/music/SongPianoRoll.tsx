@@ -1007,6 +1007,12 @@ export const SongPianoRoll = ({
     ...visibleChannels.filter((c) => c !== selectedChannel),
   ].reverse();
 
+  const c5Ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    c5Ref.current?.scrollIntoView({ block: "center" });
+  }, []);
+
   return (
     <div
       style={{
@@ -1114,6 +1120,7 @@ export const SongPianoRoll = ({
                     <PianoKey
                       $color="white"
                       $highlight={hoverNote === MAX_NOTE - (i * 12 + 11)}
+                      ref={8 - i === 5 ? c5Ref : null}
                     >
                       C{8 - i}
                     </PianoKey>

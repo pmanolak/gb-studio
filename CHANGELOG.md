@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Preference for Piano Roll or Tracker view in the Music Editor is now preserved when reopening projects
 - Add support for custom character code to tile index mappings in font JSON files [@Mico27](https://github.com/Mico27)
 - No longer need to specify music driver in settings, hUGEDriver will be used with automatic conversion for `.mod` files
+- Music Editor now centres the piano roll on C5 when opening a file
 - Updated Polish localisation. [@ReptiIe](https://github.com/ReptiIe)
 - Updated Japanese localisation. [@tomo666](https://github.com/tomo666)
 
