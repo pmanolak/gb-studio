@@ -40,7 +40,12 @@ interface InstrumentData {
   noise_macro: number[];
 }
 
-export const loadUGESong = (data: ArrayBuffer): Song | null => {
+export const loadUGESong = (buffer: Buffer): Song | null => {
+  const data = buffer.buffer.slice(
+    buffer.byteOffset,
+    buffer.byteOffset + buffer.byteLength,
+  ) as ArrayBuffer;
+
   const uint8data = new Uint8Array(data);
 
   const readUint32 = () => {
@@ -431,7 +436,7 @@ export const loadUGESong = (data: ArrayBuffer): Song | null => {
   return song;
 };
 
-export const saveUGESong = (song: Song): ArrayBuffer => {
+export const saveUGESong = (song: Song): Buffer => {
   const buffer = new ArrayBuffer(1024 * 1024);
   const view = new DataView(buffer);
   let idx = 0;
@@ -594,7 +599,7 @@ export const saveUGESong = (song: Song): ArrayBuffer => {
     addUint32(0); //Add empty routines
   }
 
-  return buffer.slice(0, idx);
+  return Buffer.from(buffer.slice(0, idx));
 };
 
 const comparePatterns = function (a: PatternCell[][], b: PatternCell[][]) {

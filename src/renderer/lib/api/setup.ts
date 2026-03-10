@@ -34,6 +34,7 @@ import {
   CompressedBackgroundResourceAsset,
   EmoteResourceAsset,
   FontResourceAsset,
+  MusicAsset,
   MusicResourceAsset,
   ProjectResources,
   SoundResourceAsset,
@@ -328,6 +329,8 @@ const APISetup = {
       ipcRenderer.send("music:data-receive", data),
     playUGE: (filename: string): Promise<void> =>
       ipcRenderer.invoke("music:play-uge", filename),
+    playMOD: (filename: string, speedConversion: boolean): Promise<void> =>
+      ipcRenderer.invoke("music:play-mod", filename, speedConversion),
   },
   soundfx: {
     playWav: (filename: string): Promise<void> =>
@@ -344,6 +347,8 @@ const APISetup = {
       ipcRenderer.invoke("tracker:load", path),
     saveUGEFile: (song: Song): Promise<void> =>
       ipcRenderer.invoke("tracker:save", song),
+    convertModToUge: (asset: MusicAsset): Promise<MusicResourceAsset> =>
+      ipcRenderer.invoke("tracker:convert-mod", asset),
   },
   sprite: {
     compileSprite: (

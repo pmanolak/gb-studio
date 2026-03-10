@@ -72,7 +72,6 @@ import {
   compileSprite,
 } from "lib/compiler/compileSprites";
 import { Asset, AssetType, assetFilename } from "shared/lib/helpers/assets";
-import toArrayBuffer from "lib/helpers/toArrayBuffer";
 import { AssetFolder, potentialAssetFolders } from "lib/project/assets";
 import confirmAssetFolder from "lib/electron/dialog/confirmAssetFolder";
 import loadProjectData, {
@@ -164,6 +163,8 @@ import { isEqual } from "lodash";
 import { writeIndexedImagePNG } from "lib/helpers/writeIndexedImage";
 import { clearAppCache } from "lib/helpers/cache";
 import { ensureNonEmptyBasename } from "shared/lib/helpers/path";
+import { convertMODDataToUGESong } from "shared/lib/uge/mod2uge/import";
+import confirmConvertModReplaceDialog from "lib/electron/dialog/confirmConvertModDialog";
 
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
@@ -1820,7 +1821,7 @@ ipcMain.handle("tracker:load", async (_event, assetPath: string) => {
   guardAssetWithinProject(filename, projectRoot);
   // Convert song to UGE format and save
   const data = await readFile(filename);
-  const song = loadUGESong(new Uint8Array(data).buffer);
+  const song = loadUGESong(data);
   if (song) {
     song.filename = assetPath;
   }
@@ -1833,9 +1834,44 @@ ipcMain.handle("tracker:save", async (_event, song: Song) => {
   // Check project has permission to access this asset
   guardAssetWithinProject(filename, projectRoot);
   // Convert song to UGE format and save
-  const buffer = saveUGESong(song);
-  await writeFileWithBackupAsync(filename, new Uint8Array(buffer), "utf8");
+  const data = saveUGESong(song);
+  await writeFileWithBackupAsync(filename, data, "utf8");
 });
+
+ipcMain.handle(
+  "tracker:convert-mod",
+  async (_event, asset: MusicResourceAsset) => {
+    const projectRoot = Path.dirname(projectPath);
+    const filename = assetFilename(projectRoot, "music", asset);
+    const newFilename = filename.replace(/\.[^/.]+$/, ".uge");
+
+    // Check project has permission to access this asset
+    guardAssetWithinProject(filename, projectRoot);
+
+    if (await fileExists(newFilename)) {
+      const relativeNewFilename = relative(projectRoot, newFilename);
+      const cancel = confirmConvertModReplaceDialog(relativeNewFilename);
+      if (cancel) {
+        return;
+      }
+    }
+
+    // Convert song to UGE format and save
+    const modData = await readFile(filename);
+    const song = convertMODDataToUGESong(
+      modData,
+      !asset.settings.disableSpeedConversion,
+    );
+    const ugeData = saveUGESong(song);
+    await writeFileWithBackupAsync(newFilename, ugeData, "utf8");
+
+    const resourceData = await loadMusicData(projectRoot)(newFilename);
+    if (!resourceData) {
+      console.error(`Unable to load asset ${newFilename}`);
+    }
+    return resourceData;
+  },
+);
 
 ipcMain.handle("sfx:play-wav", async (_event, assetPath: string) => {
   const projectRoot = Path.dirname(projectPath);
@@ -1894,18 +1930,44 @@ ipcMain.handle("music:play-uge", async (_event, assetPath: string) => {
 
   // Check project has permission to access this asset
   guardAssetWithinProject(filename, projectRoot);
-  const fileData = toArrayBuffer(await readFile(filename));
+
+  const fileData = await readFile(filename);
   const data = loadUGESong(fileData);
   if (!data) {
     console.error(`No data in song "${filename}"`);
     return;
   }
+
   createMusic(undefined, {
     action: "play",
     song: data,
     position: [0, 0],
   });
 });
+
+ipcMain.handle(
+  "music:play-mod",
+  async (_event, assetPath: string, speedConversion: boolean) => {
+    const projectRoot = Path.dirname(projectPath);
+    const filename = Path.join(projectRoot, assetPath);
+
+    // Check project has permission to access this asset
+    guardAssetWithinProject(filename, projectRoot);
+
+    const fileData = await readFile(filename);
+    const data = convertMODDataToUGESong(fileData, speedConversion);
+    if (!data) {
+      console.error(`No data in song "${filename}"`);
+      return;
+    }
+
+    createMusic(undefined, {
+      action: "play",
+      song: data,
+      position: [0, 0],
+    });
+  },
+);
 
 ipcMain.handle(
   "sprite:compile",
