@@ -1313,7 +1313,7 @@
   "FIELD_PLATFORM_TOUCHING_WALL_DESC": "Określa, czy gracz aktualnie przylega do ściany w scenie platformowej.",
   "FIELD_FONT_DESC": "Czcionka używana do wyświetlania tekstu.",
   "FIELD_CONVERT_TO_UGE": "Konwertuj do edytowalnego plik .uge ",
-  
+
   "// 7": "Asset Viewer ---------------------------------------------",
   "ASSET_SEARCH": "Szukaj",
   "ASSET_EDIT": "Edytuj",
@@ -2076,7 +2076,7 @@
   "DIALOG_CONVERT_MOD_REPLACE": "Znaleziono istniejący plik .uge ",
   "DIALOG_CONVERT_MOD_REPLACE_DESCRIPTION": "Plik .uge o nazwie \"{filename}\" już istnieje. Czy chcesz go zastąpić?",
   "DIALOG_UGE_REPLACE": "Zastąp plik .uge",
-  
+
   "// 16": "Settings ----------------------------------------------------",
 
   "SETTINGS": "Ustawienia",
