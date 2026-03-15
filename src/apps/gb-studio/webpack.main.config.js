@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const plugins = require("./webpack.plugins");
-const rules = require("./webpack.rules");
+const plugins = require("../shared/webpack.plugins");
+const rules = require("../shared/webpack.rules");
 const CopyPlugin = require("copy-webpack-plugin");
-const Path = require("path");
+const { appPath, repoPath, srcPath } = require("../shared/webpack.paths");
 
 // Add support for native node modules
 const mainRules = [
@@ -40,10 +40,6 @@ const mainPlugins = [
   }),
 ];
 
-const srcPath = (subdir) => {
-  return Path.join(__dirname, "src", subdir);
-};
-
 module.exports = {
   target: "electron-main",
   /**
@@ -51,11 +47,11 @@ module.exports = {
    * that runs in the main process.
    */
   entry: {
-    index: "./src/main.ts",
-    buildWorker: "./src/lib/compiler/buildWorker.ts",
+    index: appPath("gb-studio", "main.ts"),
+    buildWorker: srcPath("lib", "compiler", "buildWorker.ts"),
   },
   output: {
-    path: __dirname + "/.webpack/main",
+    path: repoPath(".webpack", "main"),
     filename: "[name].js",
   },
   // Put your normal webpack config below here
@@ -70,10 +66,10 @@ module.exports = {
       components: srcPath("components"),
       lang: srcPath("lang"),
       lib: srcPath("lib"),
-      ui: srcPath("components/ui"),
+      ui: srcPath("components", "ui"),
       shared: srcPath("shared"),
       consts: srcPath("consts.ts"),
-      "patrons.json": Path.join(__dirname, "patrons.json"),
+      "patrons.json": repoPath("patrons.json"),
       "#my-quickjs-variant": require.resolve(
         "@jitl/quickjs-singlefile-cjs-release-sync",
       ),

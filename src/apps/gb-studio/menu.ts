@@ -12,51 +12,17 @@ import {
   EMULATOR_MUTED_SETTING_KEY,
   LOCALE_SETTING_KEY,
   THEME_SETTING_KEY,
-} from "./consts";
+} from "consts";
 import l10n from "shared/lib/lang/l10n";
 import { ThemeManager } from "lib/themes/themeManager";
 import { L10nManager } from "lib/lang/l10nManager";
+import { MenuListenerFn, MenuListenerKey } from "shared/lib/menu/types";
 
 declare const COMMITHASH: string;
 
 const isDevMode = process.execPath.match(/[\\/]electron/);
 
 let menu: Menu;
-
-type MenuListenerFn = (arg: unknown) => void;
-type MenuListenerKey =
-  | "new"
-  | "open"
-  | "project"
-  | "save"
-  | "saveAs"
-  | "checkUpdates"
-  | "undo"
-  | "redo"
-  | "section"
-  | "zoom"
-  | "reloadAssets"
-  | "updateTheme"
-  | "updateLocale"
-  | "updateShowCollisions"
-  | "updateShowConnections"
-  | "updateShowNavigator"
-  | "updateShowSceneScreenGrid"
-  | "updateCheckSpelling"
-  | "updateEmulatorMuted"
-  | "run"
-  | "build"
-  | "ejectEngine"
-  | "exportProjectSrc"
-  | "exportProjectData"
-  | "pasteInPlace"
-  | "preferences"
-  | "pluginManager"
-  | "globalPlugins"
-  | "projectPlugins"
-  | "openMusic";
-
-export type MenuZoomType = "in" | "out" | "reset";
 
 const listeners: Record<MenuListenerKey, MenuListenerFn[]> = {
   new: [],

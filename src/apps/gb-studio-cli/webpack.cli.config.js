@@ -1,11 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const plugins = require("./webpack.plugins");
-const Path = require("path");
+const plugins = require("../shared/webpack.plugins");
+const { appPath, repoPath, srcPath } = require("../shared/webpack.paths");
 const webpack = require("webpack");
-
-const srcPath = (subdir) => {
-  return Path.join(__dirname, "src", subdir);
-};
 
 module.exports = {
   target: "electron-main",
@@ -19,8 +15,8 @@ module.exports = {
     __filename: false,
   },
   entry: {
-    index: Path.resolve(__dirname, "./src/bin/gb-studio-cli.ts"),
-    buildWorker: "./src/lib/compiler/buildWorker.ts",
+    index: appPath("gb-studio-cli", "gb-studio-cli.ts"),
+    buildWorker: srcPath("lib", "compiler", "buildWorker.ts"),
   },
   output: {
     filename: (pathData) => {
@@ -29,12 +25,12 @@ module.exports = {
       }
       return "[name].js";
     },
-    path: Path.resolve(__dirname, "./out/cli"),
+    path: repoPath("out", "cli"),
     publicPath: __dirname,
   },
   // Put your normal webpack config below here
   module: {
-    rules: require("./webpack.rules"),
+    rules: require("../shared/webpack.rules"),
   },
   plugins: [].concat(
     plugins,
@@ -47,7 +43,7 @@ module.exports = {
       components: srcPath("components"),
       lang: srcPath("lang"),
       lib: srcPath("lib"),
-      ui: srcPath("components/ui"),
+      ui: srcPath("components", "ui"),
       shared: srcPath("shared"),
       consts: srcPath("consts.ts"),
       "#my-quickjs-variant": require.resolve(

@@ -24,7 +24,7 @@
     "test": "jest --maxWorkers=2",
     "coverage": "jest --coverage --runInBand || true",
     "missing-translations": "node src/lang/list_missing.js",
-    "make:cli": "webpack --config webpack.cli.config.js",
+    "make:cli": "webpack --config ./src/apps/gb-studio-cli/webpack.cli.config.js",
     "start:cli": "env NO_TYPE_CHECKING=1 npm run make:cli && node out/cli/gb-studio-cli",
     "start:cli:profile": "env NO_TYPE_CHECKING=1 npm run make:cli && time node --prof out/cli/gb-studio-cli",
     "flamegraph": "node --prof-process --preprocess -j isolate*.log | flamebearer",
@@ -42,7 +42,7 @@
   "author": "GB Studio",
   "license": "MIT",
   "config": {
-    "forge": "./forge.config.js"
+    "forge": "./src/apps/gb-studio/forge.config.js"
   },
   "bin": {
     "gb-studio-cli": "./out/cli/gb-studio-cli.js"

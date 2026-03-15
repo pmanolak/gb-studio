@@ -19,7 +19,7 @@ import type { Song } from "shared/lib/uge/types";
 import type { PrecompiledSpriteSheetData } from "lib/compiler/compileSprites";
 import type { NavigationSection } from "store/features/navigation/navigationState";
 import type { ScriptEventDefs } from "shared/lib/scripts/scriptDefHelpers";
-import type { MenuZoomType } from "menu";
+import type { MenuZoomType } from "shared/lib/menu/types";
 import type { DebuggerDataPacket } from "shared/lib/debugger/types";
 import type { SceneMapData, VariableMapData } from "lib/compiler/compileData";
 import type { UsageData } from "lib/compiler/romUsage";

@@ -64,7 +64,7 @@ module.exports = async () => {
       },
     },
     hooks: {
-      postPackage: require("./src/lib/forge/hooks/notarize"),
+      postPackage: require("../../../src/lib/forge/hooks/notarize"),
     },
     plugins: [
       {
@@ -75,16 +75,16 @@ module.exports = async () => {
         name: "@electron-forge/plugin-webpack",
         config: {
           devServer: { liveReload: false },
-          mainConfig: "./webpack.main.config.js",
+          mainConfig: "./src/apps/gb-studio/webpack.main.config.js",
           renderer: {
-            config: "./webpack.renderer.config.js",
+            config: "./src/apps/gb-studio/webpack.renderer.config.js",
             nodeIntegration: false,
             entryPoints: [
               {
-                html: "./src/app/project/project.html",
-                js: "./src/app/project/ProjectRoot.tsx",
+                html: "./src/apps/gb-studio/project/project.html",
+                js: "./src/apps/gb-studio/project/ProjectRoot.tsx",
                 preload: {
-                  js: "./src/app/project/preload.ts",
+                  js: "./src/apps/gb-studio/project/preload.ts",
                   config: rendererPreloadConfig,
                 },
                 name: "main_window",
@@ -96,10 +96,10 @@ module.exports = async () => {
                 ],
               },
               {
-                html: "./src/app/splash/splash.html",
-                js: "./src/app/splash/SplashRoot.tsx",
+                html: "./src/apps/gb-studio/splash/splash.html",
+                js: "./src/apps/gb-studio/splash/SplashRoot.tsx",
                 preload: {
-                  js: "./src/app/splash/preload.ts",
+                  js: "./src/apps/gb-studio/splash/preload.ts",
                   config: rendererPreloadConfig,
                 },
                 name: "splash_window",
@@ -110,10 +110,10 @@ module.exports = async () => {
                 ],
               },
               {
-                html: "./src/app/preferences/preferences.html",
-                js: "./src/app/preferences/PreferencesRoot.tsx",
+                html: "./src/apps/gb-studio/preferences/preferences.html",
+                js: "./src/apps/gb-studio/preferences/PreferencesRoot.tsx",
                 preload: {
-                  js: "./src/app/project/preload.ts",
+                  js: "./src/apps/gb-studio/project/preload.ts",
                   config: rendererPreloadConfig,
                 },
                 name: "preferences_window",
@@ -124,19 +124,19 @@ module.exports = async () => {
                 ],
               },
               {
-                html: "./src/app/plugins/plugins.html",
-                js: "./src/app/plugins/PluginsRoot.tsx",
+                html: "./src/apps/gb-studio/plugins/plugins.html",
+                js: "./src/apps/gb-studio/plugins/PluginsRoot.tsx",
                 preload: {
-                  js: "./src/app/plugins/preload.ts",
+                  js: "./src/apps/gb-studio/plugins/preload.ts",
                   config: rendererPreloadConfig,
                 },
                 name: "plugins_window",
               },
               {
-                html: "./src/app/music/music.html",
-                js: "./src/app/music/MusicRoot.tsx",
+                html: "./src/apps/gb-studio/music/music.html",
+                js: "./src/apps/gb-studio/music/MusicRoot.tsx",
                 preload: {
-                  js: "./src/app/project/preload.ts",
+                  js: "./src/apps/gb-studio/project/preload.ts",
                   config: rendererPreloadConfig,
                 },
                 name: "music_window",
@@ -149,7 +149,7 @@ module.exports = async () => {
               {
                 name: "game_window",
                 preload: {
-                  js: "./src/app/game/preload.ts",
+                  js: "./src/apps/gb-studio/game/preload.ts",
                   config: rendererPreloadConfig,
                 },
               },

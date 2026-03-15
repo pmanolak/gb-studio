@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require("webpack");
-const rules = require("./webpack.rules");
-const plugins = require("./webpack.plugins");
-const Path = require("path");
+const rules = require("../shared/webpack.rules");
+const plugins = require("../shared/webpack.plugins");
+const { repoPath, srcPath } = require("../shared/webpack.paths");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const ReactRefreshTypeScript = require("react-refresh-typescript");
 
@@ -65,10 +65,6 @@ if (isDevelopment) {
   rendererPlugins.push(new ReactRefreshWebpackPlugin());
 }
 
-const srcPath = (subdir) => {
-  return Path.join(__dirname, "src", subdir);
-};
-
 module.exports = {
   // Put your normal webpack config below here
   target: "web",
@@ -112,18 +108,15 @@ module.exports = {
       components: srcPath("components"),
       lang: srcPath("lang"),
       lib: srcPath("lib"),
-      ui: srcPath("components/ui"),
+      ui: srcPath("components", "ui"),
       renderer: srcPath("renderer"),
       shared: srcPath("shared"),
       assets: srcPath("assets"),
       consts: srcPath("consts.ts"),
-      wasm: Path.join(__dirname, "appData/wasm"),
-      "contributors.json": Path.join(__dirname, "contributors.json"),
-      "contributors-external.json": Path.join(
-        __dirname,
-        "contributors-external.json",
-      ),
-      "patrons.json": Path.join(__dirname, "patrons.json"),
+      wasm: repoPath("appData", "wasm"),
+      "contributors.json": repoPath("contributors.json"),
+      "contributors-external.json": repoPath("contributors-external.json"),
+      "patrons.json": repoPath("patrons.json"),
       "#my-quickjs-variant": require.resolve(
         "@jitl/quickjs-singlefile-browser-release-sync",
       ),
