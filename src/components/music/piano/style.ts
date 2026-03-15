@@ -558,7 +558,7 @@ export const StyledPianoRollPatternBlockGrid = styled.div<{
           transparent 986px
         );
       background-size: ${PIANO_ROLL_CELL_SIZE * 8}px
-        ${PIANO_ROLL_CELL_SIZE * 8}px;
+        ${PIANO_ROLL_CELL_SIZE * OCTAVE_SIZE}px;
     `}
 
   ${(props) =>
