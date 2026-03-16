@@ -32,7 +32,6 @@ import trackerActions from "store/features/tracker/trackerActions";
 import API from "renderer/lib/api";
 import trackerDocumentActions from "store/features/trackerDocument/trackerDocumentActions";
 import { createPatternCell } from "shared/lib/uge/song";
-import clipboardActions from "store/features/clipboard/clipboardActions";
 import {
   parsePatternToClipboard,
   parseClipboardToPattern,
@@ -1117,10 +1116,11 @@ export const PianoRollCanvas = ({
         selectedPatternCells,
         originAbsCol,
       );
-      dispatch(clipboardActions.copyText(parsedSelectedPattern));
+      e.preventDefault();
+      e.clipboardData?.setData("text/plain", parsedSelectedPattern);
+      void API.clipboard.writeText(parsedSelectedPattern);
     },
     [
-      dispatch,
       selectedChannel,
       selectedPatternCells,
       song.patterns,
@@ -1128,7 +1128,7 @@ export const PianoRollCanvas = ({
     ],
   );
 
-  const onCut = useCallback(() => {
+  const onCut = useCallback((e?: ClipboardEvent) => {
     if (selectedPatternCells.length === 0) return;
     const flatPattern = song.sequence.flatMap((pid) => song.patterns[pid]);
     const originAbsCol = Math.min(...selectedPatternCells);
@@ -1138,7 +1138,9 @@ export const PianoRollCanvas = ({
       selectedPatternCells,
       originAbsCol,
     );
-    dispatch(clipboardActions.copyText(parsedSelectedPattern));
+    e?.preventDefault();
+    e?.clipboardData?.setData("text/plain", parsedSelectedPattern);
+    void API.clipboard.writeText(parsedSelectedPattern);
     const { clonedPatterns, changedPatternIds } =
       mutatePatternsAndCollectChanges(song.patterns, (patterns, changed) => {
         for (const absCol of selectedPatternCells) {
@@ -1284,7 +1286,7 @@ export const PianoRollCanvas = ({
   useEffect(() => {
     if (subpatternEditorFocus) return;
     const handleCopy = (e: ClipboardEvent) => onCopyRef.current(e);
-    const handleCut = () => onCutRef.current();
+    const handleCut = (e: ClipboardEvent) => onCutRef.current(e);
     const handlePaste = () => onPasteRef.current();
     const handlePasteInPlace = () => {
       onPasteInPlaceRef.current();

@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import API from "renderer/lib/api";
 import clamp from "shared/lib/helpers/clamp";
-import clipboardActions from "store/features/clipboard/clipboardActions";
-import { useAppDispatch, useAppSelector } from "store/hooks";
+import { useAppSelector } from "store/hooks";
 import styled, { css } from "styled-components";
 
 interface WaveEditorInputProps {
@@ -100,7 +99,6 @@ export const WaveEditorInput = ({
   waveId,
   onEditWave,
 }: WaveEditorInputProps) => {
-  const dispatch = useAppDispatch();
   const song = useAppSelector((state) => state.trackerDocument.present.song);
 
   const wave = Array.from(song?.waves[waveId] ?? []);
@@ -164,17 +162,25 @@ export const WaveEditorInput = ({
     };
   }, [handleKeyDown, hasFocus]);
 
-  const onCopy = useCallback(() => {
-    dispatch(
-      clipboardActions.copyText(
-        wave.map((value) => value.toString(16).toUpperCase()).join(""),
-      ),
-    );
-  }, [dispatch, wave]);
+  const onCopy = useCallback(
+    (e?: ClipboardEvent) => {
+      const waveString = wave.map((value) => value.toString(16).toUpperCase()).join("");
+      e?.preventDefault();
+      e?.clipboardData?.setData("text/plain", waveString);
+      void API.clipboard.writeText(waveString);
+    },
+    [wave],
+  );
 
-  const onCut = useCallback(() => {
-    dispatch(clipboardActions.copyText(wave.toString()));
-  }, [dispatch, wave]);
+  const onCut = useCallback(
+    (e?: ClipboardEvent) => {
+      const waveString = wave.toString();
+      e?.preventDefault();
+      e?.clipboardData?.setData("text/plain", waveString);
+      void API.clipboard.writeText(waveString);
+    },
+    [wave],
+  );
 
   const onPaste = useCallback(async () => {
     const newWaveString = await API.clipboard.readText();

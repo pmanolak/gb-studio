@@ -22,7 +22,6 @@ import { SelectionRect } from "components/music/piano/PianoRollCanvas";
 import scrollIntoView from "scroll-into-view-if-needed";
 import trackerDocumentActions from "store/features/trackerDocument/trackerDocumentActions";
 import { cloneDeep, mergeWith } from "lodash";
-import clipboardActions from "store/features/clipboard/clipboardActions";
 import { Position } from "components/music/tracker/SongTracker";
 import API from "renderer/lib/api";
 import { useAppDispatch, useAppSelector } from "store/hooks";
@@ -765,7 +764,7 @@ export const InstrumentSubpatternEditor = ({
     [dispatch],
   );
 
-  const onCopy = useCallback(() => {
+  const onCopy = useCallback((e?: ClipboardEvent) => {
     if (activeField === undefined) {
       return;
     }
@@ -774,11 +773,13 @@ export const InstrumentSubpatternEditor = ({
         subpattern,
         selectedTrackerFields,
       );
-      dispatch(clipboardActions.copyText(parsedSelectedPattern));
+      e?.preventDefault();
+      e?.clipboardData?.setData("text/plain", parsedSelectedPattern);
+      void API.clipboard.writeText(parsedSelectedPattern);
     }
-  }, [activeField, dispatch, selectedTrackerFields, subpattern]);
+  }, [activeField, selectedTrackerFields, subpattern]);
 
-  const onCut = useCallback(() => {
+  const onCut = useCallback((e?: ClipboardEvent) => {
     if (activeField === undefined) {
       return;
     }
@@ -787,13 +788,14 @@ export const InstrumentSubpatternEditor = ({
         subpattern,
         selectedTrackerFields,
       );
-      dispatch(clipboardActions.copyText(parsedSelectedPattern));
+      e?.preventDefault();
+      e?.clipboardData?.setData("text/plain", parsedSelectedPattern);
+      void API.clipboard.writeText(parsedSelectedPattern);
       deleteSelectedTrackerFields();
     }
   }, [
     activeField,
     deleteSelectedTrackerFields,
-    dispatch,
     selectedTrackerFields,
     subpattern,
   ]);

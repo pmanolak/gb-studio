@@ -23,7 +23,6 @@ import {
 } from "components/music/musicClipboardHelpers";
 import { getKeys, KeyWhen } from "renderer/lib/keybindings/keyBindings";
 import trackerActions from "store/features/tracker/trackerActions";
-import clipboardActions from "store/features/clipboard/clipboardActions";
 import { clamp, cloneDeep, mergeWith } from "lodash";
 import API from "renderer/lib/api";
 import { MusicDataPacket } from "shared/lib/music/types";
@@ -749,22 +748,29 @@ export const SongTracker = ({
           pattern,
           selectedTrackerFields,
         );
-        dispatch(clipboardActions.copyText(parsedSelectedPattern));
+        e.preventDefault();
+        e.clipboardData?.setData("text/plain", parsedSelectedPattern);
+        void API.clipboard.writeText(parsedSelectedPattern);
       }
     },
-    [dispatch, pattern, selectedTrackerFields],
+    [pattern, selectedTrackerFields],
   );
 
-  const onCut = useCallback(() => {
-    if (pattern && selectedTrackerFields) {
-      const parsedSelectedPattern = parsePatternFieldsToClipboard(
-        pattern,
-        selectedTrackerFields,
-      );
-      dispatch(clipboardActions.copyText(parsedSelectedPattern));
-      deleteSelectedTrackerFields();
-    }
-  }, [deleteSelectedTrackerFields, dispatch, pattern, selectedTrackerFields]);
+  const onCut = useCallback(
+    (e?: ClipboardEvent) => {
+      if (pattern && selectedTrackerFields) {
+        const parsedSelectedPattern = parsePatternFieldsToClipboard(
+          pattern,
+          selectedTrackerFields,
+        );
+        e?.preventDefault();
+        e?.clipboardData?.setData("text/plain", parsedSelectedPattern);
+        void API.clipboard.writeText(parsedSelectedPattern);
+        deleteSelectedTrackerFields();
+      }
+    },
+    [deleteSelectedTrackerFields, pattern, selectedTrackerFields],
+  );
 
   const onPaste = useCallback(async () => {
     if (pattern) {
