@@ -25,7 +25,7 @@ import { getKeys, KeyWhen } from "renderer/lib/keybindings/keyBindings";
 import trackerActions from "store/features/tracker/trackerActions";
 import { clamp, cloneDeep, mergeWith } from "lodash";
 import API from "renderer/lib/api";
-import { MusicDataPacket } from "shared/lib/music/types";
+import { MusicDataReceivePacket } from "shared/lib/music/types";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 import { createPatternCell } from "shared/lib/uge/song";
 import l10n from "shared/lib/lang/l10n";
@@ -135,12 +135,12 @@ export const SongTracker = ({
     setPlaybackState(startPlaybackPosition);
   }, [setPlaybackState, startPlaybackPosition]);
   useEffect(() => {
-    const listener = (_event: unknown, d: MusicDataPacket) => {
+    const listener = (_event: unknown, d: MusicDataReceivePacket) => {
       if (d.action === "update") {
         setPlaybackState(d.update);
       }
     };
-    const unsubscribeMusicData = API.events.music.data.subscribe(listener);
+    const unsubscribeMusicData = API.events.music.response.subscribe(listener);
 
     return () => {
       unsubscribeMusicData();

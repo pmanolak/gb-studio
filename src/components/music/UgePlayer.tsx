@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Song } from "shared/lib/uge/types";
 import trackerActions from "store/features/tracker/trackerActions";
 import API from "renderer/lib/api";
-import { MusicDataPacket } from "shared/lib/music/types";
+import { MusicDataReceivePacket } from "shared/lib/music/types";
 import { useAppDispatch, useAppSelector } from "store/hooks";
 
 interface UgePlayerProps {
@@ -23,7 +23,7 @@ export const UgePlayer = ({ data, onChannelStatusUpdate }: UgePlayerProps) => {
   const play = useAppSelector((state) => state.tracker.playing);
 
   useEffect(() => {
-    const listener = (_event: unknown, d: MusicDataPacket) => {
+    const listener = (_event: unknown, d: MusicDataReceivePacket) => {
       switch (d.action) {
         case "initialized":
           if (data) {
@@ -44,7 +44,7 @@ export const UgePlayer = ({ data, onChannelStatusUpdate }: UgePlayerProps) => {
       }
     };
 
-    const unsubscribeMusicData = API.events.music.data.subscribe(listener);
+    const unsubscribeMusicData = API.events.music.response.subscribe(listener);
 
     return () => {
       unsubscribeMusicData();

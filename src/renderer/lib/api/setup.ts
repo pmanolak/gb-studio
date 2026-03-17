@@ -455,6 +455,10 @@ const APISetup = {
       data: createSubscribeAPI<
         (event: IpcRendererEvent, data: MusicDataPacket) => void
       >("music:data"),
+      response:
+        createSubscribeAPI<
+          (event: IpcRendererEvent, data: MusicDataReceivePacket) => void
+        >("music:response"),
     },
     debugger: {
       data: createSubscribeAPI<

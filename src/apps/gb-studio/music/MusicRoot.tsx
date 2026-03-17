@@ -1,6 +1,7 @@
 import player, { PlaybackPosition } from "components/music/helpers/player";
 import { playNotePreview } from "components/music/helpers/notePreview";
 import API from "renderer/lib/api";
+import { assertUnreachable } from "shared/lib/helpers/assert";
 
 const log = (log: unknown) => {
   console.log(log);
@@ -114,6 +115,6 @@ API.events.music.data.subscribe((_event, d) => {
       });
       break;
     default:
-      log(`Action ${d.action} not supported`);
+      assertUnreachable(d);
   }
 });

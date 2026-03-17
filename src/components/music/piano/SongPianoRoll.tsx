@@ -3,7 +3,7 @@ import { Song } from "shared/lib/uge/types";
 import { SplitPaneVerticalDivider } from "ui/splitpane/SplitPaneDivider";
 import { SequenceEditor } from "components/music/SequenceEditor";
 import { SplitPaneHeader } from "ui/splitpane/SplitPaneHeader";
-import { MusicDataPacket } from "shared/lib/music/types";
+import { MusicDataReceivePacket } from "shared/lib/music/types";
 import { useAppSelector } from "store/hooks";
 import { StyledPianoRollWrapper } from "./style";
 import { PianoRollCanvas } from "./PianoRollCanvas";
@@ -33,12 +33,12 @@ export const SongPianoRoll = ({
   }, [setPlaybackState, startPlaybackPosition]);
 
   useEffect(() => {
-    const listener = (_event: unknown, d: MusicDataPacket) => {
+    const listener = (_event: unknown, d: MusicDataReceivePacket) => {
       if (d.action === "update") {
         setPlaybackState(d.update);
       }
     };
-    const unsubscribeMusicData = API.events.music.data.subscribe(listener);
+    const unsubscribeMusicData = API.events.music.response.subscribe(listener);
     return () => {
       unsubscribeMusicData();
     };

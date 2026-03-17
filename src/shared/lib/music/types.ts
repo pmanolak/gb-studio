@@ -7,18 +7,12 @@ import type {
 
 export type MusicDataPacket =
   | {
-      action: "initialized";
-    }
-  | {
       action: "load-song";
       song: Song;
     }
   | {
       action: "load-sound";
       sound: string;
-    }
-  | {
-      action: "loaded";
     }
   | {
       action: "play";
@@ -45,10 +39,6 @@ export type MusicDataPacket =
       waveForms?: Uint8Array[];
     }
   | {
-      action: "muted";
-      channels: boolean[];
-    }
-  | {
       action: "set-mute";
       channel: number;
       muted: boolean;
@@ -57,14 +47,6 @@ export type MusicDataPacket =
       action: "set-solo";
       channel: number;
       enabled: boolean;
-    }
-  | {
-      action: "update";
-      update: [number, number];
-    }
-  | {
-      action: "log";
-      message: string;
     };
 
 export type MusicDataReceivePacket =
